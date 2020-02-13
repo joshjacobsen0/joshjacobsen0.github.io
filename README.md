@@ -10,4 +10,4 @@ This is a website being built in HTML for purposes of learning and testing. It w
 
 **Is there a URL I can type in to view it?**
 
->Yes. It will eventually be [http://JoshJacobsen.me](http://JoshJacobsen.me)
+>Yes. It will eventually be [JoshJacobsen.me](http://www.JoshJacobsen.me)
