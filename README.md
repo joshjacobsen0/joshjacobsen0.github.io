@@ -1,6 +1,6 @@
 # Personal Test Website
 
-This is a website being built in HTML for purposes of learning and testing. It will eventually include CSS, but who knows when :)
+This is a website being built in HTML for purposes of learning and testing. It will eventually include CSS :)
 
 ## FAQs: (even tho no one is actually asking)
 
