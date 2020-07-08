@@ -12,6 +12,8 @@ body {
     margin-right: auto;
  }
 
+ .top-buffer { margin-top:20px; }
+
  .row-margin-05 { margin-top: 17em; }
  
  .btn-primary-spacing 
