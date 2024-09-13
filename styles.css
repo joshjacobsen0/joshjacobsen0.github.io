@@ -1,0 +1,65 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f0e68c; /* Light yellow */
+    color: #232323; /* Darker shade for contrast */
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1, h2 {
+    font-family: 'Arial Black', sans-serif; /* Bold and futuristic for headings */
+}
+
+nav ul.navbar {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center the navigation links horizontally */
+}
+
+nav ul.navbar li {
+    margin: 10px 20px; /* Add some space around the links */
+}
+
+a {
+    text-decoration: none; /* Remove underline from links */
+    color: #ff4500; /* Orange for contrast and to fit the era's aesthetics */
+}
+
+section {
+    margin: 20px 0;
+}
+
+.profile-pic, .pixelated-image {
+    border: 3px solid #ff69b4; /* Pink borders typical of early web designs */
+    padding: 5px; /* Space inside the image frame */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    background-color: #7cfc00; /* Green for a more natural fit in the 90s aesthetic */
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: medium;
+}
+
+footer {
+    margin-top: 30px; /* Space above the footer for better layout */
+    text-align: center; /* Centering the text in the footer */
+}
