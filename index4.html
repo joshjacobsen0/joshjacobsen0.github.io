@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josh Jacobsen - Network Engineer Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 60px;
+            line-height: 1.6;
+            color: #333;
+            background: url(assets/macos-wallpaper.jpg) no-repeat center center fixed;
+            background-size: cover;
+        }
+        .terminal-container {
+            background: #2e2e2e;
+            border: 2px solid #555;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 900px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        .terminal-status-bar {
+            background: #444;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .terminal-status-bar .window-controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .terminal-status-bar .window-controls .close { background: #ff5f57; }
+        .terminal-status-bar .window-controls .minimize { background: #ffbd2e; }
+        .terminal-status-bar .window-controls .maximize { background: #28ca41; }
+        .terminal-status-bar .title {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .terminal-content {
+            padding: 1rem;
+            background: #2e2e2e;
+            color: #f0f0f0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            letter-spacing: 0.05rem;
+        }
+        .terminal-content pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-status-bar">
+            <div class="window-controls">
+                <span class="close"></span>
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+            </div>
+            <div class="title">SSH: RESUME @ 172.0.0.1 [CONNECTED]</div>
+            <div class="window-controls">
+                <span class=""></span>
+                <span class=""></span>
+                <span class=""></span>
+            </div>
+        </div>
+        <div class="terminal-content">
+            <pre>
+! Resume Configuration File
+! Author: Josh
+! Role: Network Engineer
+! Format: Cisco IOS-style Resume
+!
+
+hostname NetworkEngineer-Josh
+
+!
+interface Experience0/0
+ description Senior Network Engineer - XYZ Corp
+ ip address 2020.01.01 2024.07.01
+ service-policy input Enterprise-Network-Design
+!
+ interface responsibilities
+  description "Designed and maintained enterprise LAN/WAN with 50+ sites"
+  description "Implemented SD-WAN using Cisco vEdge & Meraki MX"
+  description "Led migration from ASA to FTD with AnyConnect VPN integration"
+  description "Configured BGP, OSPF, EIGRP across multi-vendor environments"
+ exit
+
+!
+interface Experience0/1
+ description Network Engineer - ABC Systems
+ ip address 2017.06.01 2019.12.31
+ service-policy input DataCenter-Core-Networking
+!
+ interface responsibilities
+  description "Deployed Nexus 9K/7K in VDC/vPC fabric for data center backbone"
+  description "Implemented VXLAN BGP EVPN overlay for scalable segmentation"
+  description "Automated device config backups and audit checks via Python & Ansible"
+  description "Managed Meraki wireless deployments across campus networks"
+ exit
+
+!
+interface Skills
+ description Technical Proficiencies
+!
+ skillset layer2
+  switchport mode access
+  spanning-tree portfast bpduguard enable
+  description "STP, VTP, VLANs, EtherChannel, QinQ"
+ exit
+ skillset layer3
+  ip routing
+  description "BGP, OSPF, EIGRP, HSRP, VRRP, Policy-Based Routing"
+ exit
+ skillset security
+  description "Cisco ASA/FTD, Meraki MX, NAT, ACLs, VPN (IPSec, SSL, DMVPN)"
+ exit
+ skillset automation
+  description "Python, Netmiko, NAPALM, Ansible, REST APIs"
+ exit
+ skillset tools
+  description "Wireshark, SolarWinds, NetBox, Cisco Prime, DNAC (begrudgingly)"
+ exit
+ skillset wireless
+  description "Cisco WLC, Meraki MR, RF Design, Roaming, 802.1X"
+ exit
+
+!
+interface Certifications
+ description Verified Knowledge Credentials
+!
+ cert CCNP Enterprise
+  issued-date 2022.05
+ cert CCNA Routing & Switching
+  issued-date 2019.03
+ cert Meraki ECMS1
+  issued-date 2021.08
+ cert Aruba AOS-CX Switching Fundamentals
+  issued-date 2023.02
+ exit
+
+!
+interface Education
+ description Bachelor of Science - Information Technology
+ ip address University.Name 2013.09.01 2017.05.30
+
+!
+interface SoftSkills
+ description Human OS v2.0 Features
+!
+ logging enabled
+ description "Strong communication, documentation, mentoring, and incident response"
+ snmp-server contact "Team Lead, Project Manager, Infra Architect"
+ cdp enable
+ exit
+
+!
+banner motd ^
+******************************************************
+*  Highly analytical Network Engineer with a proven  *
+*  track record in designing, securing, and scaling  *
+*  enterprise networks. Loves clean configs,         *
+*  structured topologies, and zero dropped packets.  *
+******************************************************
+^
+
+!
+end
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
