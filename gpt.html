@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Engineer Portfolio</title>
+  <style>
+    body { margin:0; padding:0; background:#f0f0f0; font-family: Arial, sans-serif; }
+    .browser {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      max-width: 900px;
+      margin: 20px auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      background: #fff;
+    }
+    .browser-header {
+      display:flex;
+      align-items:center;
+      padding:8px;
+      background:#e0e0e0;
+      border-bottom:1px solid #ccc;
+      border-radius: 8px 8px 0 0;
+    }
+    .window-buttons {
+      display:flex;
+      gap:6px;
+      margin-right:12px;
+    }
+    .window-buttons .button {
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      display:inline-block;
+    }
+    .button.close { background:#ff5f56; }
+    .button.minimize { background:#ffbd2e; }
+    .button.maximize { background:#27c93f; }
+    .browser-controls {
+      display:flex;
+      gap:8px;
+    }
+    .browser-controls button {
+      width:20px;
+      height:20px;
+      border:none;
+      background: none;
+      cursor: pointer;
+      font-size:14px;
+      line-height:1;
+    }
+    .url-bar {
+      flex:1;
+      margin:0 8px;
+    }
+    .url-bar input {
+      width:100%;
+      padding:4px 8px;
+      border:1px solid #bbb;
+      border-radius:4px;
+      font-size:14px;
+    }
+    .content {
+      padding:20px;
+    }
+    header.portfolio-header { text-align:center; margin-bottom: 20px; }
+    header.portfolio-header h1 { margin: 0; font-size:2em; }
+    nav.portfolio-nav { display:flex; justify-content:center; gap:20px; margin-bottom:20px; }
+    nav.portfolio-nav a { text-decoration:none; color:#007bff; }
+    section { margin-bottom:40px; }
+    .project { margin-bottom: 15px; }
+    .skills-list, .contact-list { list-style:none; padding:0; }
+    .skills-list li, .contact-list li { margin-bottom:5px; }
+  </style>
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-header">
+      <div class="window-buttons">
+        <span class="button close"></span>
+        <span class="button minimize"></span>
+        <span class="button maximize"></span>
+      </div>
+      <div class="browser-controls">
+        <button title="Back" onclick="history.back()">&larr;</button>
+        <button title="Forward" onclick="history.forward()">&rarr;</button>
+        <button title="Reload" onclick="location.reload()">&#x21bb;</button>
+      </div>
+      <div class="url-bar">
+        <input type="text" value="https://joshportfolio.com" readonly />
+      </div>
+    </div>
+    <div class="content">
+      <header class="portfolio-header">
+        <h1>Josh's Network Engineering Portfolio</h1>
+        <p>Building resilient and scalable networks</p>
+      </header>
+      <nav class="portfolio-nav">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <section id="about">
+        <h2>About Me</h2>
+        <p>I am a network engineer with X years of experience in designing, implementing, and troubleshooting enterprise networks...</p>
+      </section>
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="project">
+          <h3>Data Center VXLAN Deployment</h3>
+          <p>Deployed VXLAN BGP EVPN across a 3-site data center network, improving network scalability and segmentation.</p>
+        </div>
+        <div class="project">
+          <h3>Meraki ASA VPN Migration</h3>
+          <p>Successfully migrated site-to-site VPNs from Cisco ASA to Meraki MX without downtime...</p>
+        </div>
+      </section>
+      <section id="skills">
+        <h2>Skills</h2>
+        <ul class="skills-list">
+          <li>Cisco IOS & NX-OS</li>
+          <li>Meraki MX & SD-WAN</li>
+          <li>VXLAN BGP EVPN</li>
+          <li>Firewall & VPN Technologies (ASA, FortiGate)</li>
+          <li>Network Automation (Python, Ansible)</li>
+        </ul>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
+        <ul class="contact-list">
+          <li>Email: <a href="mailto:josh@example.com">josh@example.com</a></li>
+          <li>LinkedIn: <a href="https://linkedin.com/in/josh">linkedin.com/in/josh</a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
