@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Engineer Portfolio - Windows Desktop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MS Sans Serif', sans-serif;
+            background: linear-gradient(45deg, #008080, #20b2aa);
+            height: 100vh;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .desktop {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
+        }
+
+        .desktop-icon {
+            position: absolute;
+            width: 80px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .desktop-icon:hover {
+            background-color: rgba(0, 0, 255, 0.3);
+        }
+
+        .desktop-icon.selected {
+            background-color: rgba(0, 0, 255, 0.5);
+        }
+
+        .icon-image {
+            width: 48px;
+            height: 48px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 5px;
+        }
+
+        .icon-label {
+            font-size: 11px;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 1px black;
+            line-height: 1.2;
+        }
+
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to bottom, #c0c0c0, #808080);
+            border-top: 1px solid #dfdfdf;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .start-button {
+            height: 32px;
+            padding: 0 15px;
+            background: linear-gradient(to bottom, #c0c0c0, #808080);
+            border: 2px outset #c0c0c0;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin: 0 2px;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(to bottom, #d0d0d0, #909090);
+        }
+
+        .start-button:active {
+            border: 2px inset #c0c0c0;
+        }
+
+        .window {
+            position: absolute;
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            min-width: 400px;
+            min-height: 300px;
+            display: none;
+            z-index: 100;
+        }
+
+        .window.active {
+            z-index: 101;
+        }
+
+        .window-title-bar {
+            height: 20px;
+            background: linear-gradient(to right, #0080ff, #004080);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            cursor: move;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .window-control {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .window-control:hover {
+            background: #d0d0d0;
+        }
+
+        .window-control:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        .window-content {
+            padding: 10px;
+            height: calc(100% - 20px);
+            overflow-y: auto;
+            font-size: 11px;
+        }
+
+        .time-display {
+            position: absolute;
+            right: 10px;
+            font-size: 11px;
+            color: black;
+        }
+
+        /* Icon styles */
+        .icon-mycomputer { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="8" y="12" width="32" height="20" fill="%23c0c0c0" stroke="%23808080"/><rect x="10" y="14" width="28" height="16" fill="%23000080"/><rect x="18" y="34" width="12" height="4" fill="%23c0c0c0"/><rect x="16" y="38" width="16" height="2" fill="%23808080"/></svg>'); }
+        .icon-projects { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M8 8h24l8 8v24H8V8z" fill="%23ffff80"/><path d="M32 8v8h8" fill="%23fff040"/><rect x="12" y="16" width="16" height="2" fill="%23000"/><rect x="12" y="20" width="20" height="2" fill="%23000"/><rect x="12" y="24" width="18" height="2" fill="%23000"/></svg>'); }
+        .icon-network { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="12" cy="12" r="6" fill="%2300ff00"/><circle cx="36" cy="12" r="6" fill="%2300ff00"/><circle cx="24" cy="36" r="6" fill="%2300ff00"/><line x1="16" y1="16" x2="32" y2="16" stroke="%23000" stroke-width="2"/><line x1="18" y1="18" x2="24" y2="30" stroke="%23000" stroke-width="2"/><line x1="30" y1="18" x2="24" y2="30" stroke="%23000" stroke-width="2"/></svg>'); }
+        .icon-certs { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="28" fill="%23ffffff" stroke="%23000" stroke-width="2"/><rect x="8" y="10" width="32" height="4" fill="%230080ff"/><text x="24" y="20" text-anchor="middle" font-size="6" fill="%23000">CISCO</text><text x="24" y="28" text-anchor="middle" font-size="4" fill="%23000">CERTIFIED</text><circle cx="38" cy="32" r="8" fill="%23ff8000"/><path d="M38 24l4 8-4 8-4-8z" fill="%23ffd000"/></svg>'); }
+        .icon-terminal { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="36" fill="%23000"/><text x="4" y="12" font-family="monospace" font-size="8" fill="%2300ff00">C:\\></text><rect x="20" y="6" width="8" height="10" fill="%2300ff00"/></svg>'); }
+        .icon-contact { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" fill="%23c0c0c0" stroke="%23808080"/><circle cx="24" cy="18" r="6" fill="%23000080"/><path d="M14 32c0-6 4-10 10-10s10 4 10 10" fill="%23000080"/></svg>'); }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .skill-item {
+            background: #f0f0f0;
+            padding: 8px;
+            border: 1px inset #c0c0c0;
+            border-radius: 2px;
+        }
+
+        .project-item {
+            background: #f8f8f8;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px inset #c0c0c0;
+        }
+
+        .cert-item {
+            background: linear-gradient(135deg, #0080ff, #004080);
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .terminal-output {
+            background: #000;
+            color: #00ff00;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            border: 2px inset #c0c0c0;
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        .blinking-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        h3 {
+            color: #000080;
+            margin: 10px 0 5px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop" id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" style="top: 20px; left: 20px;" data-window="about">
+            <div class="icon-image icon-mycomputer"></div>
+            <div class="icon-label">My Computer</div>
+        </div>
+
+        <div class="desktop-icon" style="top: 20px; left: 120px;" data-window="projects">
+            <div class="icon-image icon-projects"></div>
+            <div class="icon-label">Projects</div>
+        </div>
+
+        <div class="desktop-icon" style="top: 130px; left: 20px;" data-window="network">
+            <div class="icon-image icon-network"></div>
+            <div class="icon-label">Network Topology</div>
+        </div>
+
+        <div class="desktop-icon" style="top: 130px; left: 120px;" data-window="certs">
+            <div class="icon-image icon-certs"></div>
+            <div class="icon-label">Certifications.exe</div>
+        </div>
+
+        <div class="desktop-icon" style="top: 240px; left: 20px;" data-window="terminal">
+            <div class="icon-image icon-terminal"></div>
+            <div class="icon-label">Command Prompt</div>
+        </div>
+
+        <div class="desktop-icon" style="top: 240px; left: 120px;" data-window="contact">
+            <div class="icon-image icon-contact"></div>
+            <div class="icon-label">Contact.bat</div>
+        </div>
+
+        <!-- Windows -->
+        <div class="window" id="about" style="top: 50px; left: 200px; width: 500px; height: 400px;">
+            <div class="window-title-bar">
+                <span>My Computer - System Properties</span>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h3>System Information</h3>
+                <p><strong>User:</strong> Senior Cisco Network Engineer</p>
+                <p><strong>Processor:</strong> Expert in Routing & Switching</p>
+                <p><strong>Memory:</strong> 10+ Years Network Experience</p>
+                <p><strong>Operating System:</strong> Cisco IOS Expert</p>
+                <p><strong>Network Adapter:</strong> Catalyst & Meraki Specialist</p>
+                
+                <h3>About Me</h3>
+                <p>I'm a dedicated Cisco network engineer with extensive experience in designing, implementing, and maintaining enterprise network infrastructures. My expertise spans across traditional routing and switching technologies as well as modern cloud-managed solutions.</p>
+                
+                <p>I specialize in optimizing network performance, ensuring security compliance, and providing scalable solutions that grow with business needs. Whether it's troubleshooting complex network issues or architecting new implementations, I bring a systematic approach to network engineering.</p>
+                
+                <h3>Core Competencies</h3>
+                <div class="skill-grid">
+                    <div class="skill-item"><strong>Routing:</strong> OSPF, EIGRP, BGP</div>
+                    <div class="skill-item"><strong>Switching:</strong> VLANs, STP, VTP</div>
+                    <div class="skill-item"><strong>Catalyst:</strong> 9000, 3850, 2960 Series</div>
+                    <div class="skill-item"><strong>Meraki:</strong> Cloud Management, SD-WAN</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="projects" style="top: 80px; left: 250px; width: 600px; height: 450px;">
+            <div class="window-title-bar">
+                <span>Projects - Network Implementations</span>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h3>Recent Network Projects</h3>
+                
+                <div class="project-item">
+                    <h4>Enterprise Campus Network Redesign</h4>
+                    <p><strong>Technology:</strong> Cisco Catalyst 9300/9400 Series, ISE</p>
+                    <p><strong>Scope:</strong> Complete network infrastructure overhaul for 500+ users across 3 buildings</p>
+                    <p><strong>Results:</strong> 40% improvement in network performance, enhanced security posture with 802.1X implementation</p>
+                </div>
+
+                <div class="project-item">
+                    <h4>Multi-Site SD-WAN Deployment</h4>
+                    <p><strong>Technology:</strong> Cisco Meraki MX Series, AutoVPN</p>
+                    <p><strong>Scope:</strong> Connected 15 remote offices with centralized management</p>
+                    <p><strong>Results:</strong> Reduced WAN costs by 30%, simplified management through cloud dashboard</p>
+                </div>
+
+                <div class="project-item">
+                    <h4>Data Center Network Modernization</h4>
+                    <p><strong>Technology:</strong> Cisco Nexus 9000, ACI (Application Centric Infrastructure)</p>
+                    <p><strong>Scope:</strong> Migration from legacy 3-tier to spine-leaf architecture</p>
+                    <p><strong>Results:</strong> Increased bandwidth capacity by 10x, reduced latency by 60%</p>
+                </div>
+
+                <div class="project-item">
+                    <h4>Wireless Infrastructure Upgrade</h4>
+                    <p><strong>Technology:</strong> Cisco Meraki MR Series, WiFi 6</p>
+                    <p><strong>Scope:</strong> Campus-wide wireless coverage for 1000+ concurrent users</p>
+                    <p><strong>Results:</strong> 99.9% uptime, seamless roaming, enhanced user experience</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="network" style="top: 60px; left: 300px; width: 550px; height: 400px;">
+            <div class="window-title-bar">
+                <span>Network Topology - Skills Map</span>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h3>Technical Skills Architecture</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="background: #f0f0f0; padding: 20px; border: 2px solid #808080; display: inline-block;">
+                        <h4 style="color: #000080;">Core Layer</h4>
+                        <p>Cisco Catalyst 9400/6500 Series<br/>BGP, OSPF Routing<br/>High Availability Design</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+                    <div style="background: #e0e0e0; padding: 15px; border: 2px solid #606060; width: 45%;">
+                        <h4 style="color: #000080;">Distribution Layer</h4>
+                        <p>Catalyst 9300 Series<br/>VLAN Routing<br/>Access Control Lists<br/>Policy Enforcement</p>
+                    </div>
+                    <div style="background: #e0e0e0; padding: 15px; border: 2px solid #606060; width: 45%;">
+                        <h4 style="color: #000080;">WAN Edge</h4>
+                        <p>Meraki MX Series<br/>SD-WAN Technologies<br/>AutoVPN<br/>Traffic Shaping</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="background: #d0d0d0; padding: 15px; border: 2px solid #404040; display: inline-block; width: 80%;">
+                        <h4 style="color: #000080;">Access Layer</h4>
+                        <p>Catalyst 2960/9200 Series | Meraki MS Series<br/>PoE+ Support | 802.1X Authentication | Port Security<br/>Wireless: Meraki MR Series, WiFi 6</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px;">Protocol Expertise</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div style="background: #c8e6c9; padding: 10px; text-align: center; border: 1px solid #4caf50;">
+                        <strong>Routing</strong><br/>OSPF, EIGRP<br/>BGP, Static
+                    </div>
+                    <div style="background: #e1f5fe; padding: 10px; text-align: center; border: 1px solid #03a9f4;">
+                        <strong>Switching</strong><br/>STP, VTP<br/>EtherChannel
+                    </div>
+                    <div style="background: #fff3e0; padding: 10px; text-align: center; border: 1px solid #ff9800;">
+                        <strong>Security</strong><br/>ACLs, 802.1X<br/>NAC, Firewalls
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="certs" style="top: 100px; left: 350px; width: 500px; height: 350px;">
+            <div class="window-title-bar">
+                <span>Certifications.exe - Professional Credentials</span>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="cert-item">
+                    <h4>🏆 CCNP Enterprise</h4>
+                    <p>Cisco Certified Network Professional</p>
+                    <small>Advanced routing, switching, and troubleshooting</small>
+                </div>
+                
+                <div class="cert-item">
+                    <h4>📡 Cisco Meraki CMNA</h4>
+                    <p>Certified Meraki Network Associate</p>
+                    <small>Cloud-managed networking solutions</small>
+                </div>
+                
+                <div class="cert-item">
+                    <h4>🔒 Cisco CyberOps Associate</h4>
+                    <p>Security Operations Center Analyst</p>
+                    <small>Network security monitoring and incident response</small>
+                </div>
+
+                <h3 style="color: white; text-align: center; margin-top: 15px;">Continuous Learning</h3>
+                <p style="text-align: center; color: #e0e0e0; font-size: 10px;">
+                    Currently pursuing: CCIE Enterprise Infrastructure<br/>
+                    Regular training on emerging technologies: SD-WAN, Intent-Based Networking
+                </p>
+            </div>
+        </div>
+
+        <div class="window" id="terminal" style="top: 120px; left: 100px; width: 600px; height: 400px;">
+            <div class="window-title-bar">
+                <span>C:\WINDOWS\system32\cmd.exe</span>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="terminal-output" id="terminal-output">
+Microsoft Windows [Version 10.0.19041.1052]<br/>
+(c) Microsoft Corporation. All rights reserved.<br/><br/>
+C:\Users\NetworkEngineer&gt; show version<br/>
+Cisco IOS Software Expert - Version 15.X<br/>
+Network Engineering Experience: 10+ years<br/>
+Specialization: Enterprise Infrastructure<br/><br/>
+C:\Users\NetworkEngineer&gt; show ip route<br/>
+Gateway of last resort: Problem-solving mindset<br/><br/>
+R    192.168.1.0/24 [120/1] via Hands-on Experience<br/>
+C    10.0.0.0/8 is directly connected, Daily Operations<br/>
+S*   0.0.0.0/0 [1/0] via Continuous Learning<br/><br/>
+C:\Users\NetworkEngineer&gt; show interfaces summary<br/>
+Interface                  Status    Skills<br/>
+GigE0/0/0                 up        Cisco Catalyst Platforms<br/>
+GigE0/0/1                 up        Cisco Meraki Cloud<br/>
+GigE0/0/2                 up        Routing Protocols<br/>
+GigE0/0/3                 up        Switching Technologies<br/><br/>
+C:\Users\NetworkEngineer&gt; <span class="blinking-cursor">_</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="contact" style="top: 140px; left: 150px; width: 450px; height: 300px;">
+            <div class="window-title-bar">
+                <span>Contact.bat - Professional Network Connections</span>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h3>Get In Touch</h3>
+                <div style="background: #f8f8f8; padding: 15px; border: 2px inset #c0c0c0; margin: 10px 0;">
+                    <p><strong>📧 Email:</strong> networkpro@email.com</p>
+                    <p><strong>💼 LinkedIn:</strong> /in/cisco-network-engineer</p>
+                    <p><strong>📞 Phone:</strong> Available upon request</p>
+                    <p><strong>🌐 Location:</strong> Available for remote/hybrid work</p>
+                </div>
+
+                <h3>Professional Availability</h3>
+                <div style="background: #e8f5e8; padding: 10px; border: 1px solid #4caf50; margin: 10px 0;">
+                    <p><strong>Status:</strong> <span style="color: #4caf50;">● Online</span> - Open to opportunities</p>
+                    <p><strong>Interests:</strong> Network architecture, consulting, team leadership</p>
+                    <p><strong>Response Time:</strong> Within 24 hours</p>
+                </div>
+
+                <h3>Collaboration</h3>
+                <p>I'm passionate about sharing knowledge and collaborating with fellow network professionals. Whether you need consultation on a challenging implementation or want to discuss the latest networking trends, I'm always happy to connect!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button" id="startButton">
+            🪟 Start
+        </div>
+        <div class="time-display" id="timeDisplay"></div>
+    </div>
+
+    <script>
+        // Initialize time display
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('timeDisplay').textContent = timeStr;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Window management
+        let zIndexCounter = 100;
+        let dragElement = null;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        // Desktop icon handling
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                // Remove selection from other icons
+                document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+                // Select current icon
+                this.classList.add('selected');
+                
+                // Open window
+                const windowId = this.dataset.window;
+                const windowElement = document.getElementById(windowId);
+                if (windowElement) {
+                    windowElement.style.display = 'block';
+                    windowElement.style.zIndex = ++zIndexCounter;
+                    windowElement.classList.add('active');
+                    
+                    // Remove active from other windows
+                    document.querySelectorAll('.window').forEach(w => {
+                        if (w !== windowElement) w.classList.remove('active');
+                    });
+                }
+            });
+
+            // Double-click to open
+            icon.addEventListener('dblclick', function(e) {
+                e.stopPropagation();
+                this.click();
+            });
+        });
+
+        // Window dragging
+        document.querySelectorAll('.window-title-bar').forEach(titleBar => {
+            titleBar.addEventListener('mousedown', function(e) {
+                if (e.target.classList.contains('window-control')) return;
+                
+                dragElement = this.parentElement;
+                dragStartX = e.clientX - dragElement.offsetLeft;
+                dragStartY = e.clientY - dragElement.offsetTop;
+                
+                dragElement.style.zIndex = ++zIndexCounter;
+                dragElement.classList.add('active');
+                
+                // Remove active from other windows
+                document.querySelectorAll('.window').forEach(w => {
+                    if (w !== dragElement) w.classList.remove('active');
+                });
+            });
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (dragElement) {
+                const x = e.clientX - dragStartX;
+                const y = e.clientY - dragStartY;
+                dragElement.style.left = Math.max(0, Math.min(x, window.innerWidth - dragElement.offsetWidth)) + 'px';
+                dragElement.style.top = Math.max(0, Math.min(y, window.innerHeight - dragElement.offsetHeight - 40)) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            dragElement = null;
+        });
+
+        // Window controls
+        document.querySelectorAll('.window-control').forEach(control => {
+            control.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const window = this.closest('.window');
+                
+                if (this.classList.contains('close')) {
+                    window.style.display = 'none';
+                } else if (this.classList.contains('minimize')) {
+                    window.style.display = 'none';
+                } else if (this.classList.contains('maximize')) {
+                    // Toggle maximize
+                    if (window.classList.contains('maximized')) {
+                        window.classList.remove('maximized');
+                        window.style.width = window.dataset.originalWidth || '500px';
+                        window.style.height = window.dataset.originalHeight || '400px';
+                        window.style.left = window.dataset.originalLeft || '200px';
+                        window.style.top = window.dataset.originalTop || '100px';
+                    } else {
+                        window.dataset.originalWidth = window.style.width;
+                        window.dataset.originalHeight = window.style.height;
+                        window.dataset.originalLeft = window.style.left;
+                        window.dataset.originalTop = window.style.top;
+                        
+                        window.classList.add('maximized');
+                        window.style.width = '100vw';
+                        window.style.height = 'calc(100vh - 40px)';
+                        window.style.left = '0px';
+                        window.style.top = '0px';
+                    }
+                }
+            });
+        });
+
+        // Desktop click to deselect icons
+        document.getElementById('desktop').addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.querySelectorAll('.desktop-icon').forEach(icon => {
+                    icon.classList.remove('selected');
+                });
+            }
+        });
+
+        // Start button functionality
+        document.getElementById('startButton').addEventListener('click', function() {
+            alert('Welcome to my Network Engineer Portfolio!\n\nDouble-click any desktop icon to explore my experience and skills.\n\nBuilt with passion for networking and creative web design! 🌐');
+        });
+
+        // Terminal typing effect
+        function typeInTerminal(text, element) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+
+        // Easter egg - Konami code for Blue Screen of Death resume
+        let konamiCode = [];
+        const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up Up Down Down Left Right Left Right B A
+
+        document.addEventListener('keydown', function(e) {
+            konamiCode.push(e.keyCode);
+            if (konamiCode.length > konami.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.toString() === konami.toString()) {
+                showBSOD();
+            }
+        });
+
+        function showBSOD() {
+            const bsod = document.createElement('div');
+            bsod.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0000aa; color: white; font-family: 'Courier New', monospace; padding: 50px; z-index: 9999; font-size: 14px;">
+                    <h1 style="color: white; font-size: 24px;">A problem has been detected and Windows has been shut down to prevent damage to your computer.</h1>
+                    <br/>
+                    <p>NETWORK_ENGINEER_RESUME_DISPLAY</p>
+                    <br/>
+                    <p>If this is the first time you've seen this stop error screen, you're probably looking at my resume! If you see this screen again, you should probably hire me.</p>
+                    <br/>
+                    <p>Technical Information:</p>
+                    <p>*** STOP: 0x000000C4 (CISCO_CERTIFIED_NETWORK_PROFESSIONAL)</p>
+                    <p>*** Skills: ROUTING, SWITCHING, CATALYST, MERAKI</p>
+                    <p>*** Experience: 10+ YEARS ENTERPRISE NETWORKING</p>
+                    <p>*** Status: ACTIVELY_SEEKING_OPPORTUNITIES</p>
+                    <br/>
+                    <p>Contact Information:</p>
+                    <p>Email: networkpro@email.com</p>
+                    <p>LinkedIn: /in/cisco-network-engineer</p>
+                    <br/>
+                    <p style="position: absolute; bottom: 50px;">Press any key to return to portfolio...</p>
+                </div>
+            `;
+            
+            document.body.appendChild(bsod);
+            
+            // Remove on any key press
+            document.addEventListener('keydown', function removeBSOD() {
+                document.body.removeChild(bsod);
+                document.removeEventListener('keydown', removeBSOD);
+            }, { once: true });
+        }
+
+        // Add some window sound effects (simplified)
+        function playSound(type) {
+            // In a real implementation, you'd load actual Windows sound files
+            // For now, we'll just add visual feedback
+            if (type === 'open') {
+                console.log('Window open sound');
+            }
+        }
+
+        // Add hover effects for better UX
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            icon.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Initialize welcome message
+        setTimeout(() => {
+            const welcomeWindow = document.getElementById('about');
+            welcomeWindow.style.display = 'block';
+            welcomeWindow.style.zIndex = ++zIndexCounter;
+            welcomeWindow.classList.add('active');
+        }, 1000);
+    </script>
+</body>
+</html>
