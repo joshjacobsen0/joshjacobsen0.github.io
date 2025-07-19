@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile {
+            margin-bottom: 40px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .link-section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .link-button {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .link-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .link-button:hover::before {
+            left: 100%;
+        }
+
+        .link-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .link-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .link-arrow {
+            width: 16px;
+            height: 16px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .link-button:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .social-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 12px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .name {
+                font-size: 24px;
+            }
+            
+            .social-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <div class="avatar">YN</div>
+            <h1 class="name">Your Name</h1>
+            <p class="tagline">Developer • Designer • Creator</p>
+        </div>
+
+        <div class="links">
+            <div class="link-section">
+                <h3 class="section-title">Portfolio & Work</h3>
+                <a href="#" class="link-button">
+                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                        <path d="M2 17L12 22L22 17"/>
+                        <path d="M2 12L12 17L22 12"/>
+                    </svg>
+                    <span class="link-text">Portfolio Website</span>
+                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+                
+                <a href="#" class="link-button">
+                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"/>
+                    </svg>
+                    <span class="link-text">Latest Project</span>
+                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+
+                <a href="#" class="link-button">
+                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 14C19 15.1046 18.1046 16 17 16H5C3.89543 16 3 15.1046 3 14V10C3 8.89543 3.89543 8 5 8H17C18.1046 8 19 8.89543 19 10V14ZM17 6H5C2.79086 6 1 7.79086 1 10V14C1 16.2091 2.79086 18 5 18H17C19.2091 18 21 16.2091 21 14V10C21 7.79086 19.2091 6 17 6Z"/>
+                        <path d="M1 10L12 15L23 10"/>
+                    </svg>
+                    <span class="link-text">Resume / CV</span>
+                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="link-section">
+                <h3 class="section-title">Social & Contact</h3>
+                <div class="social-links">
+                    <a href="#" class="social-button">
+                        <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166V20.452H20.447ZM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.368C3.274 4.23 4.194 3.305 5.337 3.305C6.477 3.305 7.401 4.23 7.401 5.368C7.401 6.507 6.476 7.433 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.222C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.222 0H22.225Z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                    
+                    <a href="#" class="social-button">
+                        <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.374 0 0 5.373 0 12C0 17.302 3.438 21.8 8.207 23.387C8.806 23.498 9.025 23.126 9.025 22.81C9.025 22.524 9.015 21.749 9.01 20.731C5.672 21.489 4.968 19.15 4.968 19.15C4.421 17.799 3.634 17.428 3.634 17.428C2.545 16.642 3.717 16.657 3.717 16.657C4.922 16.746 5.556 17.946 5.556 17.946C6.626 19.946 8.363 19.416 9.048 19.108C9.155 18.335 9.466 17.806 9.81 17.506C7.145 17.201 4.343 16.168 4.343 11.513C4.343 10.194 4.812 9.115 5.579 8.267C5.455 7.963 5.044 6.72 5.696 5.046C5.696 5.046 6.704 4.726 8.995 6.301C9.954 6.035 10.98 5.902 12 5.897C13.02 5.902 14.047 6.035 15.006 6.301C17.297 4.726 18.303 5.046 18.303 5.046C18.956 6.72 18.545 7.963 18.421 8.267C19.191 9.115 19.656 10.194 19.656 11.513C19.656 16.182 16.849 17.195 14.177 17.491C14.607 17.872 15 18.618 15 19.754C15 21.378 14.985 22.686 14.985 22.81C14.985 23.129 15.201 23.504 15.808 23.386C20.566 21.797 24 17.3 24 12C24 5.373 18.627 0 12 0Z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    
+                    <a href="#" class="social-button">
+                        <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57C23.069 4.948 22.127 5.203 21.15 5.323C22.15 4.695 22.925 3.726 23.287 2.575C22.343 3.159 21.296 3.582 20.196 3.822C19.295 2.862 18.048 2.267 16.672 2.267C13.996 2.267 11.826 4.436 11.826 7.114C11.826 7.485 11.869 7.844 11.951 8.188C7.925 7.967 4.391 6.062 2.09 3.102C1.675 3.839 1.439 4.695 1.439 5.611C1.439 7.34 2.318 8.849 3.661 9.723C2.849 9.696 2.094 9.483 1.435 9.128C1.435 9.148 1.435 9.168 1.435 9.189C1.435 11.529 3.119 13.484 5.328 13.92C4.928 14.032 4.507 14.09 4.072 14.09C3.766 14.09 3.471 14.06 3.182 14.004C3.782 15.93 5.583 17.352 7.738 17.391C6.064 18.699 3.956 19.485 1.648 19.485C1.266 19.485 0.891 19.463 0.52 19.42C2.703 20.794 5.298 21.602 8.092 21.602C16.662 21.602 21.353 14.17 21.353 7.664C21.353 7.459 21.348 7.255 21.339 7.052C22.293 6.34 23.129 5.456 23.953 4.57Z"/>
+                        </svg>
+                        Twitter
+                    </a>
+                    
+                    <a href="mailto:your.email@example.com" class="social-button">
+                        <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 5.457V18.542C24 19.337 23.337 20 22.542 20H1.458C0.663 20 0 19.337 0 18.542V5.458C0 4.663 0.663 4 1.458 4H22.542C23.337 4 24 4.663 24 5.457ZM22.542 5.458L12 11.833L1.458 5.458V5.457C1.458 5.457 1.458 5.457 1.458 5.457L12 12.167L22.542 5.457V5.458Z"/>
+                        </svg>
+                        Email
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Your Name. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
