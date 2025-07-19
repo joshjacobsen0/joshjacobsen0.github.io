@@ -1,0 +1,129 @@
+
+
+
+  
+  
+  Windows Desktop
+  
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      user-select: none;
+    }
+    #desktop {
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1558864559-2e4a4d5c9f9e') no-repeat center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+    .icon {
+      position: absolute;
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+      cursor: pointer;
+      width: 80px;
+      padding: 10px;
+    }
+    .icon img {
+      width: 48px;
+      height: 48px;
+    }
+    .icon:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    #taskbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+    #start-button {
+      background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat center/24px;
+      width: 40px;
+      height: 100%;
+      cursor: pointer;
+    }
+    #start-button:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    #start-menu {
+      position: fixed;
+      bottom: 40px;
+      left: 0;
+      width: 200px;
+      background: #c0c0c0;
+      border: 1px solid #000;
+      display: none;
+      flex-direction: column;
+      padding: 5px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+    #start-menu a {
+      color: black;
+      text-decoration: none;
+      padding: 5px;
+      display: block;
+    }
+    #start-menu a:hover {
+      background: #000080;
+      color: white;
+    }
+    #clock {
+      color: white;
+      margin-left: auto;
+      padding: 0 10px;
+    }
+  
+
+
+  
+    
+      
+      My Computer
+    
+    
+      
+      Recycle Bin
+    
+  
+  
+    
+    
+      Programs
+      Documents
+      Settings
+      Shut Down
+    
+    
+  
+  
+    function toggleStartMenu() {
+      const menu = document.getElementById('start-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+<pre><code>function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString([], { hour: &#39;2-digit&#39;, minute: &#39;2-digit&#39;, second: &#39;2-digit&#39; });
+  document.getElementById(&#39;clock&#39;).textContent = time;
+  setTimeout(updateClock, 1000);
+}
+
+updateClock();
+
+document.addEventListener(&#39;click&#39;, (e) =&gt; {
+  if (!e.target.closest(&#39;#start-button&#39;) &amp;&amp; !e.target.closest(&#39;#start-menu&#39;)) {
+    document.getElementById(&#39;start-menu&#39;).style.display = &#39;none&#39;;
+  }
+});
+</code></pre>
+<p>  
+
