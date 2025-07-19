@@ -6,52 +6,68 @@
     <title>Subdomain Directory</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Comic Sans MS", "Arial", sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: #00FFFF;
+            color: #FF00FF;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
         }
         h1 {
             text-align: center;
-            color: #2c3e50;
+            color: #FF0000;
+            text-shadow: 2px 2px #FFFF00;
+            font-size: 36px;
+            border: 3px outset #C0C0C0;
+            padding: 10px;
+            background-color: #0000FF;
+            width: 50%;
+            margin: 20px auto;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
+            background-color: #FFFFFF;
+            border: 5px double #FF00FF;
+            padding: 15px;
+            box-shadow: 5px 5px 0px #000000;
         }
         .subdomain-list {
             list-style: none;
             padding: 0;
         }
         .subdomain-item {
-            background: white;
-            padding: 15px;
+            background: #FFFF00;
+            padding: 10px;
             margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border: 3px inset #C0C0C0;
+            display: block;
+            font-size: 18px;
         }
         .subdomain-item a {
-            color: #3498db;
-            text-decoration: none;
+            color: #0000FF;
+            text-decoration: underline;
             font-weight: bold;
         }
         .subdomain-item a:hover {
-            text-decoration: underline;
+            color: #FF0000;
+            background-color: #00FF00;
         }
         .description {
-            color: #7f8c8d;
+            color: #800080;
+            font-style: italic;
+            margin-left: 20px;
         }
         @media (max-width: 600px) {
             .subdomain-item {
-                flex-direction: column;
-                align-items: flex-start;
+                font-size: 16px;
             }
-            .description {
-                margin-top: 10px;
+            h1 {
+                font-size: 24px;
+                width: 80%;
+            }
+            .container {
+                padding: 10px;
             }
         }
     </style>
