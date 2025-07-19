@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows Desktop</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      user-select: none;
+    }
+    #desktop {
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1558864559-2e4a4d5c9f9e') no-repeat center/cover;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .icon {
+      position: absolute;
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+      cursor: pointer;
+      width: 80px;
+      padding: 10px;
+    }
+    .icon img {
+      width: 48px;
+      height: 48px;
+    }
+    .icon:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    #taskbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+    #start-button {
+      background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat center/24px;
+      width: 40px;
+      height: 100%;
+      cursor: pointer;
+    }
+    #start-button:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    #start-menu {
+      position: fixed;
+      bottom: 40px;
+      left: 0;
+      width: 200px;
+      background: #c0c0c0;
+      border: 1px solid #000;
+      display: none;
+      flex-direction: column;
+      padding: 5px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+    #start-menu a {
+      color: black;
+      text-decoration: none;
+      padding: 5px;
+      display: block;
+    }
+    #start-menu a:hover {
+      background: #000080;
+      color: white;
+    }
+    #clock {
+      color: white;
+      margin-left: auto;
+      padding: 0 10px;
+    }
+    #terminal {
+      width: 600px;
+      height: 400px;
+      background: #000;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      padding: 20px;
+      border: 2px solid #c0c0c0;
+      box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+      overflow-y: auto;
+      white-space: pre-wrap;
+      position: relative;
+      z-index: 10;
+    }
+    #terminal-header {
+      background: #c0c0c0;
+      color: #000;
+      padding: 5px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #terminal-buttons span {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      margin-left: 5px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 16px;
+    }
+    #terminal-content a {
+      color: #0ff;
+      text-decoration: none;
+    }
+    #terminal-content a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="desktop">
+    <div class="icon" style="top: 20px; left: 20px;" ondblclick="alert('Opening My Computer')">
+      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Computer">
+      <div>My Computer</div>
+    </div>
+    <div class="icon" style="top: 120px; left: 20px;" ondblclick="alert('Opening Recycle Bin')">
+      <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin">
+      <div>Recycle Bin</div>
+    </div>
+    <div id="terminal">
+      <div id="terminal-header">
+        <span>Portfolio - Command Prompt</span>
+        <div id="terminal-buttons">
+          <span onclick="this.parentElement.parentElement.parentElement.style.display='none'">X</span>
+        </div>
+      </div>
+      <div id="terminal-content">
+        ╔════════════════════════════════════════════════════════════╗
+        ║          Network Engineer Portfolio - John Doe             ║
+        ╚════════════════════════════════════════════════════════════╝
+
+        ╭───── About ────────────────────────────────────────────────╮
+        │ Welcome to my portfolio! I'm John Doe, a passionate        │
+        │ Network Engineer with 5+ years of experience in designing,  │
+        │ implementing, and maintaining robust network infrastructures.│
+        │ Expertise in Cisco, Juniper, and cloud-based networking.    │
+        ╰────────────────────────────────────────────────────────────╯
+
+        ╭───── Skills ───────────────────────────────────────────────╮
+        │ + Routing/Switching: OSPF, BGP, VLANs, MPLS               │
+        │ + Network Security: Firewalls, VPNs, IDS/IPS              │
+        │ + Tools: Wireshark, SolarWinds, Ansible, Python scripting  │
+        │ + Certifications: CCNP, JNCIP, AWS Certified Advanced     │
+        │                   Networking                              │
+        ╰────────────────────────────────────────────────────────────╯
+
+        ╭───── Projects ─────────────────────────────────────────────╮
+        │ 1. Enterprise Network Upgrade                              │
+        │    - Led migration to SD-WAN for 50+ branch offices       │
+        │    - Reduced latency by 30% and improved failover         │
+        │ 2. Cloud Integration                                      │
+        │    - Designed hybrid cloud network using AWS Direct Connect│
+        │    - Ensured secure, high-availability connectivity       │
+        │ 3. Security Hardening                                     │
+        │    - Implemented zero-trust architecture for 10k+ users   │
+        │    - Reduced security incidents by 40%                    │
+        ╰────────────────────────────────────────────────────────────╯
+
+        ╭───── Contact ──────────────────────────────────────────────╮
+        │ Email: <a href="mailto:john.doe@example.com">john.doe@example.com</a>           │
+        │ LinkedIn: <a href="https://linkedin.com/in/johndoe">linkedin.com/in/johndoe</a> │
+        │ GitHub: <a href="https://github.com/johndoe">github.com/johndoe</a>           │
+        ╰────────────────────────────────────────────────────────────╯
+
+        ╭───── Navigation ───────────────────────────────────────────╮
+        │ Type 'exit' to close the terminal or click the [X] button. │
+        ╰────────────────────────────────────────────────────────────╯
+      </div>
+    </div>
+  </div>
+  <div id="taskbar">
+    <div id="start-button" onclick="toggleStartMenu()"></div>
+    <div id="start-menu">
+      <a href="#" onclick="alert('Opening Programs')">Programs</a>
+      <a href="#" onclick="alert('Opening Documents')">Documents</a>
+      <a href="#" onclick="alert('Opening Settings')">Settings</a>
+      <a href="#" onclick="alert('Shutting Down')">Shut Down</a>
+    </div>
+    <div id="clock"></div>
+  </div>
+  <script>
+    function toggleStartMenu() {
+      const menu = document.getElementById('start-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      document.getElementById('clock').textContent = time;
+      setTimeout(updateClock, 1000);
+    }
+
+    updateClock();
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#start-button') && !e.target.closest('#start-menu')) {
+        document.getElementById('start-menu').style.display = 'none';
+      }
+    });
+
+    document.getElementById('terminal-content').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.textContent.trim().toLowerCase() === 'exit') {
+        document.getElementById('terminal').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
