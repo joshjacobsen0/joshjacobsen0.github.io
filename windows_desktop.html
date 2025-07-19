@@ -14,7 +14,7 @@
     #desktop {
       width: 100vw;
       height: 100vh;
-      background: url('https://images.unsplash.com/photo-1558864559-2e4a4d5c9f9e') no-repeat center/cover;
+      background: url('https://wallup.net/wp-content/uploads/2017/03/29/488823-Windows_95-solid_color-blue.jpg') no-repeat center/cover;
       position: relative;
       overflow: hidden;
     }
@@ -39,15 +39,15 @@
       bottom: 0;
       width: 100%;
       height: 40px;
-      background: rgba(0,0,0,0.9);
+      background: rgba(184, 184, 184, 0.9);
       display: flex;
       align-items: center;
       padding: 0 10px;
       box-sizing: border-box;
     }
     #start-button {
-      background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat center/24px;
-      width: 40px;
+      background: url('https://win98icons.alexmeub.com/images/start-button.png') no-repeat center/54px;
+      width:60px;
       height: 100%;
       cursor: pointer;
     }
@@ -85,14 +85,27 @@
 </head>
 <body>
   <div id="desktop">
-    <div class="icon" style="top: 20px; left: 20px;" ondblclick="alert('Opening My Computer')">
-      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Computer">
-      <div>My Computer</div>
+
+    <div class="icon" style="top: 20px; left: 20px;" ondblclick="alert('Opening Resume.txt')">
+      <img src="https://win98icons.alexmeub.com/icons/png/notepad_file-2.png" alt="My Resume">
+      <div>My Resume</div>
     </div>
-    <div class="icon" style="top: 120px; left: 20px;" onddbclick="alert('Opening Recycle Bin')">
-      <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin">
-      <div>Recycle Bin</div>
+
+    <div class="icon" style="top: 125px; left: 20px;" onddbclick="alert('Opening Projects')">
+      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="Projects">
+      <div>Projects</div>
     </div>
+
+    <div class="icon" style="top: 220px; left: 20px;" ondblclick="alert('Opening Contact')">
+        <img src="https://win98icons.alexmeub.com/icons/png/modem-4.png" alt="Contact Me">
+        <div>Contact Me</div>
+    </div>
+    
+    <div class="icon" style="top: 330px; left: 20px;" ondblclick="alert('Opening Links')">
+        <img src="https://win98icons.alexmeub.com/icons/png/world-2.png" alt="Links">
+        <div>Links</div>
+    </div>
+
   </div>
   <div id="taskbar">
     <div id="start-button" onclick="toggleStartMenu()"></div>
