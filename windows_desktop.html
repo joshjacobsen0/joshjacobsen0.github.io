@@ -1,10 +1,10 @@
-
-
-
-  
-  
-  Windows Desktop
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows Desktop</title>
+  <style>
     body {
       margin: 0;
       overflow: hidden;
@@ -81,49 +81,49 @@
       margin-left: auto;
       padding: 0 10px;
     }
-  
-
-
-  
-    
-      
-      My Computer
-    
-    
-      
-      Recycle Bin
-    
-  
-  
-    
-    
-      Programs
-      Documents
-      Settings
-      Shut Down
-    
-    
-  
-  
+  </style>
+</head>
+<body>
+  <div id="desktop">
+    <div class="icon" style="top: 20px; left: 20px;" ondblclick="alert('Opening My Computer')">
+      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Computer">
+      <div>My Computer</div>
+    </div>
+    <div class="icon" style="top: 120px; left: 20px;" onddbclick="alert('Opening Recycle Bin')">
+      <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin">
+      <div>Recycle Bin</div>
+    </div>
+  </div>
+  <div id="taskbar">
+    <div id="start-button" onclick="toggleStartMenu()"></div>
+    <div id="start-menu">
+      <a href="#" onclick="alert('Opening Programs')">Programs</a>
+      <a href="#" onclick="alert('Opening Documents')">Documents</a>
+      <a href="#" onclick="alert('Opening Settings')">Settings</a>
+      <a href="#" onclick="alert('Shutting Down')">Shut Down</a>
+    </div>
+    <div id="clock"></div>
+  </div>
+  <script>
     function toggleStartMenu() {
       const menu = document.getElementById('start-menu');
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
 
-<pre><code>function updateClock() {
-  const now = new Date();
-  const time = now.toLocaleTimeString([], { hour: &#39;2-digit&#39;, minute: &#39;2-digit&#39;, second: &#39;2-digit&#39; });
-  document.getElementById(&#39;clock&#39;).textContent = time;
-  setTimeout(updateClock, 1000);
-}
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      document.getElementById('clock').textContent = time;
+      setTimeout(updateClock, 1000);
+    }
 
-updateClock();
+    updateClock();
 
-document.addEventListener(&#39;click&#39;, (e) =&gt; {
-  if (!e.target.closest(&#39;#start-button&#39;) &amp;&amp; !e.target.closest(&#39;#start-menu&#39;)) {
-    document.getElementById(&#39;start-menu&#39;).style.display = &#39;none&#39;;
-  }
-});
-</code></pre>
-<p>  
-
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#start-button') && !e.target.closest('#start-menu')) {
+        document.getElementById('start-menu').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
