@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacOS Desktop</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1537420327992-d6e2567e195b') no-repeat center center fixed;
+            background-size: cover;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* Menu Bar */
+        .menu-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 1000;
+        }
+
+        .menu-bar .apple-logo {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .menu-bar .menu-item {
+            margin: 0 10px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .menu-bar .menu-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Desktop Icons */
+        .desktop {
+            position: absolute;
+            top: 30px;
+            left: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            gap: 20px;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .desktop-icon img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 5px;
+        }
+
+        .desktop-icon span {
+            font-size: 13px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 2px 5px;
+        }
+
+        /* Dock */
+        .dock {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .dock-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            transition: transform 0.2s ease;
+        }
+
+        .dock-icon:hover {
+            transform: scale(1.5);
+        }
+
+        .dock-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Bar -->
+    <div class="menu-bar">
+        <div class="apple-logo"></div>
+        <div class="menu-item">File</div>
+        <div class="menu-item">Edit</div>
+        <div class="menu-item">View</div>
+        <div class="menu-right">
+            <div class="menu-item">Sat, Jul 19, 2025</div>
+            <div class="menu-item">1:53 AM</div>
+        </div>
+    </div>
+
+    <!-- Desktop Icons -->
+    <div class="desktop">
+        <div class="desktop-icon">
+            <img src="https://img.icons8.com/color/64/folder-invoices.png" alt="Documents">
+            <span>Documents</span>
+        </div>
+        <div class="desktop-icon">
+            <img src="https://img.icons8.com/color/64/trash.png" alt="Trash">
+            <span>Trash</span>
+        </div>
+        <div class="desktop-icon">
+            <img src="https://img.icons8.com/color/64/application-window.png" alt="Apps">
+            <span>Apps</span>
+        </div>
+    </div>
+
+    <!-- Dock -->
+    <div class="dock">
+        <div class="dock-icon">
+            <img src="https://img.icons8.com/ios-filled/50/mac-os.png" alt="Finder">
+        </div>
+        <div class="dock-icon">
+            <img src="https://img.icons8.com/color/50/calendar.png" alt="Calendar">
+        </div>
+        <div class="dock-icon">
+            <img src="https://img.icons8.com/color/50/safari.png" alt="Safari">
+        </div>
+        <div class="dock-icon">
+            <img src="https://img.icons8.com/color/50/terminal.png" alt="Terminal">
+        </div>
+    </div>
+
+    <script>
+        // Update time every minute
+        function updateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            document.querySelector('.menu-right .menu-item:nth-child(1)').textContent = dateStr;
+            document.querySelector('.menu-right .menu-item:nth-child(2)').textContent = timeStr;
+        }
+        setInterval(updateTime, 60000);
+        updateTime();
+    </script>
+</body>
+</html>
