@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josh Jacobsen - Network Engineer Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 60px;
+            line-height: 1.6;
+            color: #333;
+            background: #1a1a1a; /* Dark background to contrast terminal */
+        }
+        .terminal-container {
+            background: #2e2e2e; /* Terminal background color */
+            border: 2px solid #555;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 900px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        .terminal-status-bar {
+            background: #444;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .terminal-status-bar .window-controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .terminal-status-bar .window-controls .close {
+            background: #ff5f57;
+        }
+        .terminal-status-bar .window-controls .minimize {
+            background: #ffbd2e;
+        }
+        .terminal-status-bar .window-controls .maximize {
+            background: #28ca41;
+        }
+        .terminal-status-bar .title {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .terminal-content {
+            padding: 1rem;
+            background: #2e2e2e;
+            color: #f0f0f0; /* Light text for terminal look */
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        nav {
+            background: #34495e;
+            padding: 1rem;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        section {
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 {
+            color: #3498db; /* Adjusted for better contrast in terminal */
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        .skills-list, .certifications-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .skill, .certification {
+            background: #4a4a4a; /* Darker background for terminal style */
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: #f0f0f0;
+        }
+        .experience-item, .project-item {
+            margin-bottom: 1.5rem;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+        }
+        @media (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+            .terminal-container {
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-status-bar">
+            <div class="window-controls">
+                <span class="close"></span>
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+            </div>
+            <div class="title">Josh Jacobsen - Portfolio [bash]</div>
+            <div class="window-controls"></div> <!-- Empty div for symmetry -->
+        </div>
+        <div class="terminal-content">
+            <header>
+                <h1>Josh Jacobsen</h1>
+                <p>Network Engineer | Your Tagline or Specialization</p>
+            </header>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <section id="about">
+                <h2>About Me</h2>
+                <p>Hello! I'm Your Name, a dedicated Network Engineer with Your Years of experience in designing, implementing, and managing network infrastructure. I specialize in Your Specialization (e.g., cloud networking, cybersecurity, enterprise networks). Passionate about optimizing network performance and ensuring robust connectivity.</p>
+            </section>
+            <section id="skills">
+                <h2>Skills</h2>
+                <div class="skills-list">
+                    <span class="skill">Cisco Networking</span>
+                    <span class="skill">Routing & Switching</span>
+                    <span class="skill">Network Security</span>
+                    <span class="skill">Cloud Networking (AWS/Azure)</span>
+                    <span class="skill">SD-WAN</span>
+                    <span class="skill">Python Automation</span>
+                    <span class="skill">Wireshark</span>
+                    <span class="skill">Firewall Management</span>
+                </div>
+            </section>
+            <section id="certifications">
+                <h2>Certifications</h2>
+                <div class="certifications-list">
+                    <span class="certification">Cisco Certified Network Associate (CCNA)</span>
+                    <span class="certification">Cisco Certified Network Professional (CCNP)</span>
+                    <span class="certification">CompTIA Network+</span>
+                    <span class="certification">AWS Certified Advanced Networking</span>
+                    <span class="certification">Certified Information Systems Security Professional (CISSP)</span>
+                </div>
+            </section>
+            <section id="experience">
+                <h2>Experience</h2>
+                <div class="experience-item">
+                    <h3>Network Engineer - Your Company Name</h3>
+                    <p>Your Start Date - Your End Date</p>
+                    <ul>
+                        <li>Designed and implemented network solutions for Your Number clients.</li>
+                        <li>Managed enterprise-grade Cisco and Juniper devices.</li>
+                        <li>Improved network uptime by Your Percentage% through proactive monitoring.</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Junior Network Administrator - Your Previous Company</h3>
+                    <p>Your Start Date - Your End Date</p>
+                    <ul>
+                        <li>Supported network operations for Your Number users.</li>
+                        <li>Assisted in troubleshooting and resolving network issues.</li>
+                        <li>Contributed to network documentation and policy development.</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="project-item">
+                    <h3>Your Project Name</h3>
+                    <p>Designed a Your Description (e.g., secure SD-WAN solution for a mid-sized enterprise, reducing latency by Your Percentage%).</p>
+                </div>
+                <div class="project-item">
+                    <h3>Your Other Project Name</h3>
+                    <p>Implemented Your Description (e.g., automated network monitoring system using Python, saving Your Hours hours weekly).</p>
+                </div>
+            </section>
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Email: <a href="/cdn-cgi/l/email-protection#b58c9a8087db9098949c99b5908d9498859990db969a98"><span class="__cf_email__" data-cfemail="427b6d77702c676f636b6e42677a636f726e672c616d6f">[email&#160;protected]</span></a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile">Your LinkedIn Profile</a></p>
+                <p>Phone: Your Phone Number</p>
+            </section>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; Your Year Your Name. All rights reserved.</p>
+    </footer>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9617dbd0ad1bbf7d',t:'MTc1MjkwMzM2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b)='loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9617e23b588e570d',t:'MTc1MjkwMzYyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961803528875a9db',t:'MTc1MjkwNDk3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>
