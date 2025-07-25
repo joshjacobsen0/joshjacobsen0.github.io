@@ -287,6 +287,35 @@
             color: #64748b;
         }
 
+
+        .blog-post {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .blog-post h3 {
+            font-size: 1.5rem;
+            color: #f2f2f2;
+            margin: 0.5rem 0;
+        }
+        .blog-post-meta {
+            color: #c1c1c2;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .blog-post p {
+            font-size: 1rem;
+            color: #949596;
+        }
+        .blog-post a {
+            color: #6256a4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .blog-post a:hover {
+            text-decoration: underline;
+        }
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -372,9 +401,26 @@
     </section>
 
     <main class="container">
-        <div class="blog-grid" id="blogGrid">
-            <!-- Blog posts will be populated by JavaScript -->
-        </div>
+                   <h2>Latest Blog Posts</h2>
+            <div id="blog-posts">
+                <article class="blog-post">
+                    <h3>Optimizing BGP for High-Performance Networks</h3>
+                    <div class="blog-post-meta">Posted on July 20, 2025 by JoshNET Team</div>
+                    <p>In this post, we explore advanced BGP optimization techniques for large-scale networks, including route reflectors and confederations.</p>
+                    <a href="#read-more">Read More</a>
+                </article>
+                <article class="blog-post">
+                    <h3>Network Security Best Practices for 2025</h3>
+                    <div class="blog-post-meta">Posted on July 15, 2025 by JoshNET Team</div>
+                    <p>Learn the latest strategies for securing your network infrastructure against modern threats, including zero-trust architecture.</p>
+                    <a href="#read-more">Read More</a>
+                </article>
+                <article class="blog-post">
+                    <h3>Automating Network Configuration with Python</h3>
+                    <div class="blog-post-meta">Posted on July 10, 2025 by JoshNET Team</div>
+                    <p>Discover how to use Python and Netmiko to automate network device configurations and save time.</p>
+                    <a href="#read-more">Read More</a>
+                </article>
     </main>
 
     <footer>
