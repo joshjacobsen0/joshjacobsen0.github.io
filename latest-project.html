@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Automation Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #1a1a1a;
+            border-right: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .main-area {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at center, #0f0f0f 0%, #000 100%);
+        }
+
+        .network-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #00ff00;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .node:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+            border-color: #00ffff;
+        }
+
+        .node.router {
+            border-color: #ff6600;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .node.switch {
+            border-color: #0066ff;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+        }
+
+        .node.endpoint {
+            border-color: #ff0066;
+            box-shadow: 0 0 20px rgba(255, 0, 102, 0.3);
+        }
+
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #333, #666, #333);
+            transform-origin: left center;
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .packet {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            z-index: 10;
+            animation: travel 2s linear;
+        }
+
+        .packet.tcp { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .packet.udp { background: #ffff00; box-shadow: 0 0 10px #ffff00; }
+        .packet.http { background: #ff6600; box-shadow: 0 0 10px #ff6600; }
+        .packet.icmp { background: #ff0066; box-shadow: 0 0 10px #ff0066; }
+
+        @keyframes travel {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .control-panel {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-panel h3 {
+            color: #00ffff;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .button {
+            background: #333;
+            border: 1px solid #666;
+            color: #00ff00;
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .button:hover {
+            background: #555;
+            border-color: #00ff00;
+        }
+
+        .button.active {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .stats {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 11px;
+        }
+
+        .stat-value {
+            color: #00ffff;
+        }
+
+        .routing-table {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 10px;
+        }
+
+        .routing-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .routing-table th,
+        .routing-table td {
+            padding: 5px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .routing-table th {
+            color: #00ffff;
+        }
+
+        .node-label {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #999;
+            white-space: nowrap;
+        }
+
+        .protocol-legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .topology-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 10px;
+            max-width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="control-panel">
+                <h3>NETWORK CONTROLS</h3>
+                <button class="button active" id="startBtn">START SIMULATION</button>
+                <button class="button" id="stopBtn">STOP SIMULATION</button>
+                <button class="button" id="resetBtn">RESET NETWORK</button>
+                <br>
+                <button class="button" id="failureBtn">SIMULATE FAILURE</button>
+            </div>
+
+            <div class="control-panel">
+                <h3>PROTOCOL FILTERS</h3>
+                <button class="button active" data-protocol="tcp">TCP</button>
+                <button class="button active" data-protocol="udp">UDP</button>
+                <button class="button active" data-protocol="http">HTTP</button>
+                <button class="button active" data-protocol="icmp">ICMP</button>
+            </div>
+
+            <div class="stats">
+                <h3>NETWORK STATISTICS</h3>
+                <div class="stat-item">
+                    <span>Active Connections:</span>
+                    <span class="stat-value" id="connections">12</span>
+                </div>
+                <div class="stat-item">
+                    <span>Packets/sec:</span>
+                    <span class="stat-value" id="packetsPerSec">45</span>
+                </div>
+                <div class="stat-item">
+                    <span>Bandwidth:</span>
+                    <span class="stat-value" id="bandwidth">2.4 Mbps</span>
+                </div>
+                <div class="stat-item">
+                    <span>Latency:</span>
+                    <span class="stat-value" id="latency">12ms</span>
+                </div>
+                <div class="stat-item">
+                    <span>Packet Loss:</span>
+                    <span class="stat-value" id="packetLoss">0.02%</span>
+                </div>
+            </div>
+
+            <div class="routing-table">
+                <h3>ROUTING TABLE (R1)</h3>
+                <table>
+                    <tr>
+                        <th>Dest</th>
+                        <th>Next Hop</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr>
+                        <td>192.168.1.0/24</td>
+                        <td>Direct</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>192.168.2.0/24</td>
+                        <td>10.0.0.2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>192.168.3.0/24</td>
+                        <td>10.0.0.3</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="main-area">
+            <div class="network-canvas" id="networkCanvas">
+                <!-- Nodes will be dynamically created here -->
+            </div>
+
+            <div class="protocol-legend">
+                <h4 style="color: #00ffff; margin-bottom: 10px;">PROTOCOL LEGEND</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #00ff00;"></div>
+                    <span>TCP</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ffff00;"></div>
+                    <span>UDP</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff6600;"></div>
+                    <span>HTTP</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff0066;"></div>
+                    <span>ICMP</span>
+                </div>
+            </div>
+
+            <div class="topology-info">
+                <h4 style="color: #00ffff; margin-bottom: 10px;">NETWORK TOPOLOGY</h4>
+                <p>• 3 Routers (OSPF)</p>
+                <p>• 2 Switches (L2)</p>
+                <p>• 6 Endpoints</p>
+                <p>• Redundant paths enabled</p>
+                <p>• Load balancing active</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class NetworkVisualization {
+            constructor() {
+                this.canvas = document.getElementById('networkCanvas');
+                this.running = false;
+                this.nodes = [];
+                this.connections = [];
+                this.activeProtocols = new Set(['tcp', 'udp', 'http', 'icmp']);
+                this.stats = {
+                    connections: 12,
+                    packetsPerSec: 45,
+                    bandwidth: 2.4,
+                    latency: 12,
+                    packetLoss: 0.02
+                };
+                
+                this.init();
+            }
+
+            init() {
+                this.createNetworkTopology();
+                this.bindEvents();
+                this.updateStats();
+                this.startSimulation();
+            }
+
+            createNetworkTopology() {
+                const canvasWidth = this.canvas.offsetWidth;
+                const canvasHeight = this.canvas.offsetHeight;
+
+                // Define network nodes
+                const nodeDefinitions = [
+                    { id: 'R1', type: 'router', x: canvasWidth * 0.2, y: canvasHeight * 0.3, label: 'Router R1' },
+                    { id: 'R2', type: 'router', x: canvasWidth * 0.5, y: canvasHeight * 0.2, label: 'Router R2' },
+                    { id: 'R3', type: 'router', x: canvasWidth * 0.8, y: canvasHeight * 0.4, label: 'Router R3' },
+                    { id: 'S1', type: 'switch', x: canvasWidth * 0.3, y: canvasHeight * 0.6, label: 'Switch S1' },
+                    { id: 'S2', type: 'switch', x: canvasWidth * 0.7, y: canvasHeight * 0.7, label: 'Switch S2' },
+                    { id: 'PC1', type: 'endpoint', x: canvasWidth * 0.1, y: canvasHeight * 0.7, label: 'PC1' },
+                    { id: 'PC2', type: 'endpoint', x: canvasWidth * 0.2, y: canvasHeight * 0.8, label: 'PC2' },
+                    { id: 'PC3', type: 'endpoint', x: canvasWidth * 0.5, y: canvasHeight * 0.8, label: 'PC3' },
+                    { id: 'SRV1', type: 'endpoint', x: canvasWidth * 0.8, y: canvasHeight * 0.8, label: 'Server 1' },
+                    { id: 'SRV2', type: 'endpoint', x: canvasWidth * 0.9, y: canvasHeight * 0.6, label: 'Server 2' }
+                ];
+
+                // Define connections
+                const connectionDefinitions = [
+                    ['R1', 'R2'], ['R2', 'R3'], ['R1', 'R3'],
+                    ['R1', 'S1'], ['R3', 'S2'],
+                    ['S1', 'PC1'], ['S1', 'PC2'], ['S1', 'PC3'],
+                    ['S2', 'SRV1'], ['R3', 'SRV2']
+                ];
+
+                // Create nodes
+                nodeDefinitions.forEach(nodeDef => {
+                    this.createNode(nodeDef);
+                });
+
+                // Create connections
+                connectionDefinitions.forEach(conn => {
+                    this.createConnection(conn[0], conn[1]);
+                });
+            }
+
+            createNode(nodeDef) {
+                const node = document.createElement('div');
+                node.className = `node ${nodeDef.type}`;
+                node.id = nodeDef.id;
+                node.style.left = `${nodeDef.x - 30}px`;
+                node.style.top = `${nodeDef.y - 30}px`;
+                
+                const label = document.createElement('div');
+                label.className = 'node-label';
+                label.textContent = nodeDef.label;
+                node.appendChild(label);
+
+                // Add node type icon
+                const icon = document.createElement('div');
+                icon.style.fontSize = '12px';
+                icon.style.fontWeight = 'bold';
+                switch(nodeDef.type) {
+                    case 'router': icon.textContent = 'R'; break;
+                    case 'switch': icon.textContent = 'S'; break;
+                    case 'endpoint': icon.textContent = 'PC'; break;
+                }
+                node.appendChild(icon);
+
+                this.canvas.appendChild(node);
+                this.nodes.push({ element: node, ...nodeDef });
+            }
+
+            createConnection(fromId, toId) {
+                const fromNode = this.nodes.find(n => n.id === fromId);
+                const toNode = this.nodes.find(n => n.id === toId);
+
+                if (!fromNode || !toNode) return;
+
+                const connection = document.createElement('div');
+                connection.className = 'connection';
+
+                const dx = toNode.x - fromNode.x;
+                const dy = toNode.y - fromNode.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                connection.style.width = `${length}px`;
+                connection.style.left = `${fromNode.x}px`;
+                connection.style.top = `${fromNode.y}px`;
+                connection.style.transform = `rotate(${angle}deg)`;
+
+                this.canvas.appendChild(connection);
+                this.connections.push({
+                    element: connection,
+                    from: fromNode,
+                    to: toNode,
+                    length: length
+                });
+            }
+
+            sendPacket(fromNode, toNode, protocol) {
+                if (!this.activeProtocols.has(protocol)) return;
+
+                const packet = document.createElement('div');
+                packet.className = `packet ${protocol}`;
+                
+                // Find the connection between these nodes
+                const connection = this.connections.find(conn => 
+                    (conn.from.id === fromNode.id && conn.to.id === toNode.id) ||
+                    (conn.from.id === toNode.id && conn.to.id === fromNode.id)
+                );
+
+                if (!connection) {
+                    // If no direct connection, animate straight line (fallback)
+                    packet.style.left = `${fromNode.x}px`;
+                    packet.style.top = `${fromNode.y}px`;
+                    this.canvas.appendChild(packet);
+                    
+                    const duration = 1000;
+                    packet.style.transition = `all ${duration}ms linear`;
+                    
+                    setTimeout(() => {
+                        packet.style.left = `${toNode.x}px`;
+                        packet.style.top = `${toNode.y}px`;
+                    }, 10);
+
+                    setTimeout(() => {
+                        if (packet.parentNode) {
+                            packet.parentNode.removeChild(packet);
+                        }
+                    }, duration);
+                    return;
+                }
+
+                // Animate along the connection line
+                packet.style.left = `${fromNode.x}px`;
+                packet.style.top = `${fromNode.y}px`;
+                this.canvas.appendChild(packet);
+
+                const dx = toNode.x - fromNode.x;
+                const dy = toNode.y - fromNode.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const duration = (distance / 150) * 1000; // Adjust speed
+                
+                let startTime;
+                const animate = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    
+                    // Calculate position along the line
+                    const currentX = fromNode.x + (dx * progress);
+                    const currentY = fromNode.y + (dy * progress);
+                    
+                    packet.style.left = `${currentX}px`;
+                    packet.style.top = `${currentY}px`;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Remove packet after animation completes
+                        setTimeout(() => {
+                            if (packet.parentNode) {
+                                packet.parentNode.removeChild(packet);
+                            }
+                        }, 100);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+
+            startSimulation() {
+                this.running = true;
+                document.getElementById('startBtn').classList.add('active');
+                document.getElementById('stopBtn').classList.remove('active');
+                
+                this.simulationInterval = setInterval(() => {
+                    this.generateTraffic();
+                    this.updateStats();
+                }, 500);
+            }
+
+            stopSimulation() {
+                this.running = false;
+                document.getElementById('startBtn').classList.remove('active');
+                document.getElementById('stopBtn').classList.add('active');
+                
+                if (this.simulationInterval) {
+                    clearInterval(this.simulationInterval);
+                }
+            }
+
+            generateTraffic() {
+                if (!this.running) return;
+
+                const protocols = ['tcp', 'udp', 'http', 'icmp'];
+                const endpoints = this.nodes.filter(n => n.type === 'endpoint');
+                const routers = this.nodes.filter(n => n.type === 'router');
+
+                // Generate random traffic with proper routing
+                for (let i = 0; i < 3; i++) {
+                    const protocol = protocols[Math.floor(Math.random() * protocols.length)];
+                    const fromNode = endpoints[Math.floor(Math.random() * endpoints.length)];
+                    const toNode = endpoints[Math.floor(Math.random() * endpoints.length)];
+                    
+                    if (fromNode !== toNode) {
+                        // Route through connected routers realistically
+                        const route = this.findRoute(fromNode, toNode);
+                        if (route.length > 1) {
+                            this.sendPacketThroughRoute(route, protocol);
+                        }
+                    }
+                }
+            }
+
+            findRoute(fromNode, toNode) {
+                // Simple routing logic - find path through network topology
+                const visited = new Set();
+                const queue = [[fromNode]];
+                
+                while (queue.length > 0) {
+                    const path = queue.shift();
+                    const currentNode = path[path.length - 1];
+                    
+                    if (currentNode.id === toNode.id) {
+                        return path;
+                    }
+                    
+                    if (visited.has(currentNode.id)) continue;
+                    visited.add(currentNode.id);
+                    
+                    // Find connected nodes
+                    const connectedNodes = this.connections
+                        .filter(conn => conn.from.id === currentNode.id || conn.to.id === currentNode.id)
+                        .map(conn => conn.from.id === currentNode.id ? conn.to : conn.from)
+                        .filter(node => !visited.has(node.id));
+                    
+                    for (const nextNode of connectedNodes) {
+                        queue.push([...path, nextNode]);
+                    }
+                }
+                
+                // Fallback: direct connection
+                return [fromNode, toNode];
+            }
+
+            sendPacketThroughRoute(route, protocol) {
+                for (let i = 0; i < route.length - 1; i++) {
+                    setTimeout(() => {
+                        this.sendPacket(route[i], route[i + 1], protocol);
+                    }, i * 300); // Stagger the packet sending
+                }
+            }
+
+            updateStats() {
+                // Simulate dynamic stats
+                this.stats.packetsPerSec = 30 + Math.floor(Math.random() * 40);
+                this.stats.bandwidth = (1.8 + Math.random() * 2).toFixed(1);
+                this.stats.latency = 8 + Math.floor(Math.random() * 10);
+                this.stats.packetLoss = (Math.random() * 0.1).toFixed(3);
+
+                document.getElementById('packetsPerSec').textContent = this.stats.packetsPerSec;
+                document.getElementById('bandwidth').textContent = `${this.stats.bandwidth} Mbps`;
+                document.getElementById('latency').textContent = `${this.stats.latency}ms`;
+                document.getElementById('packetLoss').textContent = `${this.stats.packetLoss}%`;
+            }
+
+            bindEvents() {
+                document.getElementById('startBtn').addEventListener('click', () => {
+                    if (!this.running) this.startSimulation();
+                });
+
+                document.getElementById('stopBtn').addEventListener('click', () => {
+                    if (this.running) this.stopSimulation();
+                });
+
+                document.getElementById('resetBtn').addEventListener('click', () => {
+                    this.stopSimulation();
+                    // Clear all packets
+                    const packets = this.canvas.querySelectorAll('.packet');
+                    packets.forEach(packet => packet.remove());
+                });
+
+                document.getElementById('failureBtn').addEventListener('click', () => {
+                    this.simulateFailure();
+                });
+
+                // Protocol filter buttons
+                document.querySelectorAll('[data-protocol]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const protocol = btn.dataset.protocol;
+                        if (this.activeProtocols.has(protocol)) {
+                            this.activeProtocols.delete(protocol);
+                            btn.classList.remove('active');
+                        } else {
+                            this.activeProtocols.add(protocol);
+                            btn.classList.add('active');
+                        }
+                    });
+                });
+            }
+
+            simulateFailure() {
+                // Temporarily disable a random connection
+                const connection = this.connections[Math.floor(Math.random() * this.connections.length)];
+                connection.element.style.background = '#ff0000';
+                connection.element.style.animation = 'none';
+                
+                setTimeout(() => {
+                    connection.element.style.background = 'linear-gradient(90deg, #333, #666, #333)';
+                    connection.element.style.animation = 'pulse 2s infinite';
+                }, 3000);
+            }
+        }
+
+        // Initialize the network visualization when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new NetworkVisualization();
+        });
+    </script>
+</body>
+</html>
