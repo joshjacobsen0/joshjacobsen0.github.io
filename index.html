@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh's Homepage</title>
+    <title>Josh Jacobsen</title>
     <style>
         * {
             margin: 0;
@@ -12,288 +12,297 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0061ff 0%, #60efff 100%);
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            line-height: 1.6;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            transform: rotate(-45deg);
+        }
+
+        .star {
+            --star-color: #fff;
+            --star-tail-length: 6em;
+            --star-tail-height: 2px;
+            --star-width: calc(var(--star-tail-length) / 6);
+            --fall-duration: 9s;
+            --tail-fade-duration: var(--fall-duration);
+            position: absolute;
+            top: var(--top-offset);
+            left: 0;
+            width: var(--star-tail-length);
+            height: var(--star-tail-height);
+            color: var(--star-color);
+            background: linear-gradient(45deg, currentColor, transparent);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 6px currentColor);
+            transform: translate3d(104em, 0, 0);
+            animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .star {
+                animation: none;
+                transform: none;
+            }
+        }
+
+        .star:nth-child(1) {
+            --star-tail-length: 5.9em;
+            --top-offset: 36vh;
+            --fall-duration: 8.315s;
+            --fall-delay: 1.222s;
+        }
+        .star:nth-child(2) {
+            --star-tail-length: 5.8em;
+            --top-offset: 32vh;
+            --fall-duration: 11.631s;
+            --fall-delay: 1.671s;
+        }
+        .star:nth-child(3) {
+            --star-tail-length: 5.3em;
+            --top-offset: 61vh;
+            --fall-duration: 10.302s;
+            --fall-delay: 0.294s;
+        }
+        .star:nth-child(4) {
+            --star-tail-length: 5.6em;
+            --top-offset: 66vh;
+            --fall-duration: 6.862s;
+            --fall-delay: 0.000s;
+        }
+        .star:nth-child(5) {
+            --star-tail-length: 6.5em;
+            --top-offset: 32vh;
+            --fall-duration: 10.884s;
+            --fall-delay: 1.606s;
+        }
+        .star:nth-child(6) {
+            --star-tail-length: 5.2em;
+            --top-offset: 31vh;
+            --fall-duration: 8.697s;
+            --fall-delay: 0.776s;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translate3d(-30em, 0, 0);
+            }
+        }
+
+        @keyframes tail-fade {
+            0%, 50% {
+                width: var(--star-tail-length);
+                opacity: 1;
+            }
+            70%, 80% {
+                width: 0;
+                opacity: 0.4;
+            }
+            100% {
+                width: 0;
+                opacity: 0;
+            }
+        }
+
+        /* Static stars */
+        .static-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .static-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        .static-star:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+        .static-star:nth-child(2) { top: 30%; left: 80%; animation-delay: 1s; }
+        .static-star:nth-child(3) { top: 70%; left: 30%; animation-delay: 2s; }
+        .static-star:nth-child(4) { top: 80%; left: 70%; animation-delay: 0.5s; }
+        .static-star:nth-child(5) { top: 10%; left: 60%; animation-delay: 1.5s; }
+        .static-star:nth-child(6) { top: 60%; left: 10%; animation-delay: 2.5s; }
+        .static-star:nth-child(7) { top: 40%; left: 90%; animation-delay: 0.3s; }
+        .static-star:nth-child(8) { top: 90%; left: 40%; animation-delay: 1.8s; }
+        .static-star:nth-child(9) { top: 25%; left: 45%; animation-delay: 0.8s; }
+        .static-star:nth-child(10) { top: 75%; left: 85%; animation-delay: 2.2s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         .container {
-            max-width: 480px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
+            z-index: 10;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
         }
 
-        .profile {
-            margin-bottom: 40px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #456fe8, #19b0ec);
-            margin: 0 auto 20px;
+        h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+        }
+
+        .social-links {
             display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            font-weight: bold;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
             color: white;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .tagline {
-            font-size: 16px;
-            color: #718096;
-            margin-bottom: 30px;
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .link-section {
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 12px;
-            text-align: left;
-        }
-
-        .link-button {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
             text-decoration: none;
-            color: #2d3748;
-            font-weight: 500;
+            font-size: 1.5rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            margin-bottom: 8px;
         }
 
-        .link-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
-        }
-
-        .link-button::before {
+        .social-link::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
-        .link-button:hover::before {
+        .social-link:hover::before {
             left: 100%;
         }
 
-        .link-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 12px;
-            flex-shrink: 0;
+        .social-link:hover {
+            transform: translateY(-10px) scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
         }
 
-        .link-text {
-            flex-grow: 1;
-            text-align: left;
-        }
+        .social-link:nth-child(1):hover { background: linear-gradient(45deg, #1daff2, rgba(255, 255, 255, 0.2)); }
+        .social-link:nth-child(2):hover { background: linear-gradient(45deg, #1daff2, rgba(255, 255, 255, 0.2)); }
+        .social-link:nth-child(3):hover { background: linear-gradient(45deg, #1daff2, rgba(255, 255, 255, 0.2)); }
+        .social-link:nth-child(4):hover { background: linear-gradient(45deg, #1daff2, rgba(255, 255, 255, 0.2)); }
 
-        .link-arrow {
-            width: 16px;
-            height: 16px;
-            opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-
-        .link-button:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(4px);
-        }
-
-        .social-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-        }
-
-        .social-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 16px 12px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #2d3748;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .social-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
-        }
-
-        .social-icon {
-            width: 32px;
-            height: 32px;
-            margin-bottom: 8px;
-        }
-
-        .footer {
-            margin-top: 40px;
-            font-size: 14px;
-            color: #a0aec0;
-        }
-
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                margin: 20px;
+                padding: 40px 30px;
             }
             
-            .name {
-                font-size: 24px;
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
             }
             
             .social-links {
-                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
+    <div class="stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
+    <div class="static-stars">
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+        <div class="static-star"></div>
+    </div>
+
     <div class="container">
-        <div class="profile">
-            <div class="avatar">JJ</div>
-            <h1 class="name">Josh Jacobsen</h1>
-            <p class="tagline">Professional Services Network Engineer</p>
-        </div>
-
-        <div class="links">
-            <div class="link-section">
-                <h3 class="section-title">Portfolio & Work</h3>
-               
-                <a href="/latest-project.html" class="link-button">
-                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"/>
-                    </svg>
-                    <span class="link-text">Latest Project</span>
-                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
-
-                <a href="/blog.html" class="link-button">
-                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M16 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6C4 4.89543 4.89543 4 6 4H8M16 4V2C16 1.44772 15.5523 1 15 1H9C8.44772 1 8 1.44772 8 2V4M16 4H8M8 8H16M8 12H16M8 16H12"/>
-                    </svg>
-                    <span class="link-text">Blog</span>
-                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
-
-                <a href="/personal-portfolio.html" class="link-button">
-                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                        <path d="M2 17L12 22L22 17"/>
-                        <path d="M2 12L12 17L22 12"/>
-                    </svg>
-                    <span class="link-text">Portfolio Website</span>
-                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
-                
-                <a href="/resume-cv.html" class="link-button">
-                    <svg class="link-icon" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 14C19 15.1046 18.1046 16 17 16H5C3.89543 16 3 15.1046 3 14V10C3 8.89543 3.89543 8 5 8H17C18.1046 8 19 8.89543 19 10V14ZM17 6H5C2.79086 6 1 7.79086 1 10V14C1 16.2091 2.79086 18 5 18H17C19.2091 18 21 16.2091 21 14V10C21 7.79086 19.2091 6 17 6Z"/>
-                        <path d="M1 10L12 15L23 10"/>
-                    </svg>
-                    <span class="link-text">Resume / CV</span>
-                    <svg class="link-arrow" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                    </svg>
-                </a> 
-            
-            </div>
-
-            <div class="link-section">
-                <h3 class="section-title">Social & Contact</h3>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/josh-jacobsen/" class="social-button">
-                        <img class="social-icon" src="assets/linkedin-icon.png" alt="LinkedIn">
-                        LinkedIn
-                    </a>
-                    
-                    <a href="https://github.com/joshjacobsen0" class="social-button">
-                        <img class="social-icon" src="assets/github-icon.png" alt="GitHub">
-                        GitHub
-                    </a>
-                    
-                    <a href="#" class="social-button">
-                        <img class="social-icon" src="assets/twitter-icon.png" alt="Twitter">
-                        Twitter
-                    </a>
-                    
-                    <a href="https://www.instagram.com/josh_jacobsen/" class="social-button">
-                        <img class="social-icon" src="assets/instagram-icon.png" alt="Twitter">
-                        Instagram
-                    </a>
-
-                    <a href="/downloads.html" class="social-button">
-                        <img class="social-icon" src="assets/folder-icon.png" alt="Downloads">
-                        Downloads
-                    </a>
-
-                    <a href="mailto:your.email@example.com" class="social-button">
-                        <img class="social-icon" src="assets/email-icon.png" alt="Email">
-                        Email
-                    </a>
-                    
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>© 2025 Josh Jacobsen. All rights reserved.</p>
+        <h1>Josh Jacobsen</h1>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/josh-jacobsen/" class="social-link" target="_blank" title="LinkedIn">
+                in
+            </a>
+            <a href="/personal-portfolio.html" class="social-link" target="_blank" title="Resume">
+                📄
+            </a>
+            <a href="/downloads.html" class="social-link" target="_blank" title="Files">
+                📁
+            </a>
+            <a href="/links.html" class="social-link" target="_blank" title="Links">
+                🖇️
+            </a>
         </div>
     </div>
 </body>
