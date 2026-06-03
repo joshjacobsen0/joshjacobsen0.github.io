@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NEXUS &mdash; Enterprise Networking Consultant</title>
+<style>
+  :root {
+    --bg: #05060f;
+    --bg-2: #0a0d22;
+    --cyan: #22e6ff;
+    --violet: #8b5cf6;
+    --pink: #ff2d9b;
+    --text: #e9ecff;
+    --muted: #8a90b8;
+    --card: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.10);
+    --glow: 0 0 40px rgba(34, 230, 255, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ---- Animated network canvas ---- */
+  #net {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.18), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(34, 230, 255, 0.16), transparent 40%),
+      linear-gradient(160deg, var(--bg), var(--bg-2));
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  /* ---- Nav ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 6vw;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(5, 6, 15, 0.75);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 6vw;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .logo span { color: var(--text); -webkit-text-fill-color: var(--text); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--pink));
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    color: #03040c;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.9rem;
+    box-shadow: var(--glow);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 55px rgba(34, 230, 255, 0.6); }
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .burger span { width: 26px; height: 3px; background: var(--text); border-radius: 3px; }
+
+  /* ---- Hero ---- */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 6vw 60px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    backdrop-filter: blur(8px);
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #22ff8a;
+    box-shadow: 0 0 12px #22ff8a;
+    animation: pulse 1.6s infinite;
+  }
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    max-width: 16ch;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  h1 .grad {
+    background: linear-gradient(120deg, var(--cyan), var(--violet) 50%, var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+  }
+  .sub {
+    margin-top: 26px;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted);
+    max-width: 60ch;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-btns {
+    margin-top: 42px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .btn {
+    padding: 16px 34px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    color: #03040c;
+    box-shadow: var(--glow);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(34, 230, 255, 0.6); }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover { border-color: var(--cyan); transform: translateY(-3px); }
+
+  /* ---- Marquee of tech ---- */
+  .marquee {
+    margin-top: 70px;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 56px;
+    width: max-content;
+    animation: scroll 22s linear infinite;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1.05rem;
+  }
+  .marquee-track span { white-space: nowrap; }
+
+  /* ---- Sections ---- */
+  section { padding: 100px 6vw; max-width: 1200px; margin: 0 auto; }
+  .eyebrow {
+    color: var(--cyan);
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .section-sub { color: var(--muted); max-width: 56ch; margin-bottom: 50px; }
+
+  /* ---- Stats ---- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .stat .num {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(120deg, var(--cyan), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .label { color: var(--muted); font-size: 0.92rem; margin-top: 6px; }
+
+  /* ---- Services grid ---- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 34px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(34, 230, 255, 0.12), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .card:hover { transform: translateY(-8px); border-color: rgba(34, 230, 255, 0.45); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .card:hover::before { opacity: 1; }
+  .card .ico {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: grid; place-items: center;
+    font-size: 1.6rem;
+    background: linear-gradient(135deg, rgba(34,230,255,0.18), rgba(139,92,246,0.18));
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 0.96rem; }
+
+  /* ---- Process timeline ---- */
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .step { position: relative; padding-top: 28px; }
+  .step .n {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    color: #03040c;
+    margin-bottom: 16px;
+    box-shadow: var(--glow);
+  }
+  .step h4 { font-size: 1.1rem; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: 0.9rem; }
+
+  /* ---- CTA banner ---- */
+  .cta-banner {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(34,230,255,0.10), rgba(255,45,155,0.10));
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 70px 40px;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ---- Contact form ---- */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+  form { display: flex; flex-direction: column; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.5px; }
+  input, textarea {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-size: 0.98rem;
+    font-family: inherit;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(34,230,255,0.15); }
+  .form-note { font-size: 0.85rem; color: var(--cyan); min-height: 20px; }
+  .contact-info li { list-style: none; margin-bottom: 22px; color: var(--muted); }
+  .contact-info .k { color: var(--text); font-weight: 700; display: block; margin-bottom: 2px; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    padding: 50px 6vw 40px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* ---- Reveal animation ---- */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.show { opacity: 1; transform: none; }
+
+  /* ---- Keyframes ---- */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.6); opacity: 0.5; } }
+  @keyframes shimmer { to { background-position: 200% center; } }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .burger { display: flex; }
+    .stats, .grid, .timeline, .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 861px) and (max-width: 1024px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<canvas id="net"></canvas>
+
+<div class="wrap">
+  <nav id="nav">
+    <div class="logo">NE<span>X</span>US</div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#stats">Impact</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book a Call</a>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <header>
+    <div class="badge"><span class="dot"></span> Available for new enterprise engagements</div>
+    <h1>Enterprise networks, <span class="grad">engineered to never blink.</span></h1>
+    <p class="sub">I architect, secure, and optimize the backbone of mission-critical infrastructure &mdash; from multi-site SD-WAN to zero-trust segmentation and 99.999% uptime data centers.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary">Start Your Project</a>
+      <a href="#services" class="btn btn-ghost">Explore Services</a>
+    </div>
+
+    <div class="marquee">
+      <div class="marquee-track" id="marquee">
+        <span>Cisco</span><span>Juniper</span><span>Palo Alto</span><span>Arista</span><span>Fortinet</span><span>VMware NSX</span><span>AWS Direct Connect</span><span>BGP / OSPF</span><span>SD-WAN</span><span>Zero Trust</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="services">
+    <div class="reveal">
+      <p class="eyebrow">What I Deliver</p>
+      <h2>Full-stack networking expertise</h2>
+      <p class="section-sub">Twenty years of designing resilient, secure, and high-performance networks for finance, healthcare, and global enterprise.</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal"><div class="ico">&#128752;</div><h3>Network Architecture</h3><p>Greenfield design and refactoring of campus, data center, and multi-cloud topologies built for scale and zero downtime.</p></div>
+      <div class="card reveal"><div class="ico">&#128274;</div><h3>Zero-Trust Security</h3><p>Micro-segmentation, NAC, and next-gen firewall policy that contains threats before they ever move laterally.</p></div>
+      <div class="card reveal"><div class="ico">&#127760;</div><h3>SD-WAN &amp; Edge</h3><p>Software-defined WAN rollouts that cut MPLS costs while boosting application performance across every branch.</p></div>
+      <div class="card reveal"><div class="ico">&#9889;</div><h3>Performance Tuning</h3><p>Deep packet analysis, QoS engineering, and latency optimization for trading floors and real-time workloads.</p></div>
+      <div class="card reveal"><div class="ico">&#9729;</div><h3>Cloud Connectivity</h3><p>Hybrid and multi-cloud interconnects with Direct Connect, ExpressRoute, and resilient transit architectures.</p></div>
+      <div class="card reveal"><div class="ico">&#128296;</div><h3>24/7 Managed Ops</h3><p>Proactive monitoring, automated remediation, and on-call escalation that keeps your SLAs green around the clock.</p></div>
+    </div>
+  </section>
+
+  <section id="stats">
+    <div class="stats">
+      <div class="stat reveal"><div class="num" data-target="240">0</div><div class="label">Networks deployed</div></div>
+      <div class="stat reveal"><div class="num" data-target="99.999" data-decimals="3" data-suffix="%">0</div><div class="label">Uptime delivered</div></div>
+      <div class="stat reveal"><div class="num" data-target="20" data-suffix="+">0</div><div class="label">Years of experience</div></div>
+      <div class="stat reveal"><div class="num" data-target="38" data-suffix="%">0</div><div class="label">Avg. cost reduction</div></div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="reveal">
+      <p class="eyebrow">How We Work</p>
+      <h2>From audit to always-on</h2>
+      <p class="section-sub">A proven, low-risk path that gets you from fragile to fortress without disrupting the business.</p>
+    </div>
+    <div class="timeline">
+      <div class="step reveal"><div class="n">1</div><h4>Discover</h4><p>Deep audit of topology, traffic, and security posture to map every risk and bottleneck.</p></div>
+      <div class="step reveal"><div class="n">2</div><h4>Design</h4><p>A tailored blueprint with redundancy, segmentation, and a phased migration plan.</p></div>
+      <div class="step reveal"><div class="n">3</div><h4>Deploy</h4><p>Hands-on implementation with zero-downtime cutovers and full documentation.</p></div>
+      <div class="step reveal"><div class="n">4</div><h4>Defend</h4><p>Continuous monitoring, tuning, and rapid response to keep performance peak.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta-banner reveal">
+      <h2>Ready to bulletproof your network?</h2>
+      <p class="section-sub" style="margin: 14px auto 30px;">Book a free 30-minute infrastructure assessment. No pitch &mdash; just a clear read on where you stand.</p>
+      <a href="#contact" class="btn btn-primary">Schedule Your Assessment</a>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">Get In Touch</p>
+        <h2>Let's build something resilient</h2>
+        <p class="section-sub">Tell me about your environment and I'll get back within one business day.</p>
+        <ul class="contact-info">
+          <li><span class="k">Email</span> hello@nexus-net.consulting</li>
+          <li><span class="k">Phone</span> +1 (555) 014-8820</li>
+          <li><span class="k">Based in</span> Remote &mdash; serving clients worldwide</li>
+        </ul>
+      </div>
+      <form id="contactForm" class="reveal" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Jane Doe" required />
+        </div>
+        <div class="field">
+          <label for="email">Work Email</label>
+          <input id="email" name="email" type="email" placeholder="jane@company.com" required />
+        </div>
+        <div class="field">
+          <label for="message">How can I help?</label>
+          <textarea id="message" name="message" rows="4" placeholder="We're scaling to 12 sites and need SD-WAN..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <div class="form-note" id="formNote"></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo" style="font-size:1.1rem; margin-bottom:10px;">NE<span>X</span>US</div>
+    &copy; <span id="year"></span> Nexus Networking Consulting. Architecting the unbreakable.
+  </footer>
+</div>
+
+<script>
+  // ---- Animated network background ----
+  const canvas = document.getElementById("net");
+  const ctx = canvas.getContext("2d");
+  let w, h, nodes;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    const count = Math.min(110, Math.floor((w * h) / 16000));
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+    }));
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  const mouse = { x: -9999, y: -9999 };
+  window.addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener("mouseout", () => { mouse.x = -9999; mouse.y = -9999; });
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+    }
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      // link to mouse
+      const mdx = a.x - mouse.x, mdy = a.y - mouse.y;
+      const md = Math.hypot(mdx, mdy);
+      if (md < 160) {
+        ctx.strokeStyle = "rgba(255,45,155," + (1 - md / 160) * 0.4 + ")";
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+      }
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d < 130) {
+          ctx.strokeStyle = "rgba(34,230,255," + (1 - d / 130) * 0.25 + ")";
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      ctx.fillStyle = "rgba(139,92,246,0.9)";
+      ctx.beginPath(); ctx.arc(a.x, a.y, 2, 0, Math.PI * 2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // ---- Nav scroll state ----
+  const nav = document.getElementById("nav");
+  window.addEventListener("scroll", () => {
+    nav.classList.toggle("scrolled", window.scrollY > 40);
+  });
+
+  // ---- Mobile burger ----
+  document.getElementById("burger").addEventListener("click", () => {
+    const links = document.querySelector(".nav-links");
+    links.style.display = links.style.display === "flex" ? "none" : "flex";
+  });
+
+  // ---- Duplicate marquee for seamless loop ----
+  const mq = document.getElementById("marquee");
+  mq.innerHTML += mq.innerHTML;
+
+  // ---- Card spotlight follow ----
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
+      card.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
+    });
+  });
+
+  // ---- Reveal on scroll ----
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  // ---- Animated stat counters ----
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || "0", 10);
+      const suffix = el.dataset.suffix || "";
+      const dur = 1600;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toFixed(decimals) + suffix;
+      }
+      requestAnimationFrame(tick);
+      statObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll(".num").forEach((el) => statObserver.observe(el));
+
+  // ---- Contact form ----
+  const form = document.getElementById("contactForm");
+  const note = document.getElementById("formNote");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const msg = form.message.value.trim();
+    if (!name || !email || !msg) { note.style.color = "#ff2d9b"; note.textContent = "Please fill in every field."; return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { note.style.color = "#ff2d9b"; note.textContent = "That email doesn't look right."; return; }
+    note.style.color = "var(--cyan)";
+    note.textContent = "Thanks, " + name.split(" ")[0] + "! Your message is queued — I'll reply within one business day.";
+    form.reset();
+  });
+
+  // ---- Year ----
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
