@@ -2,10 +2,10 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: none; }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 17px;
   color: #000;
   /* classic iOS pinstripe */
@@ -31,7 +31,6 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
   border: 1px solid #a6a9ad;
   border-radius: 9px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
   margin-bottom: 20px;
   overflow: hidden;
 }
@@ -49,26 +48,36 @@ a { color: inherit; text-decoration: none; }
 
 .group > li > a { padding-right: 34px; position: relative; }
 
-/* disclosure chevron */
-.group > li > a::after {
+/* disclosure arrow (images from the Cydia style sheet) */
+.group > li > a:not(.back)::after {
   content: "";
   position: absolute;
-  right: 18px;
+  right: 14px;
   top: 50%;
-  width: 7px;
-  height: 7px;
-  margin-top: -4px;
-  border-top: 3px solid #6f6f6f;
-  border-right: 3px solid #6f6f6f;
-  transform: rotate(45deg);
+  width: 10px;
+  height: 13px;
+  margin-top: -6.5px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAANCAYAAACQN/8FAAAAUElEQVQoz2NggIKysrI6EGbAB6CK/kNxHT6FLUgKQbiaaorb0RRXUK4YKCENxG+RFD4BYiFsim6jKVKhnSIWID6CVxGSYhWoAtyK0BTjVAQA7b9/uRuNojcAAAAASUVORK5CYII=") no-repeat center / 10px 13px;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .group > li > a:not(.back)::after { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAAn0lEQVRIx73VUQqAIBAEUCm6WWIQ/hZBh+nmtkGGyKKzuiTMj8FD1sFMCMHkoTVTVu5bLRxmKdcbMVrCmtAUcwwmRiM2Uc4CCKPpCVXQfIbdKHfLXSi/CaKUAQIF6EYZIbAVrdcAQ/eIYmUVoJrgAYESTOtSvvn9VxsQ81CxUUzzcfDFuWti0ge2iuUnXHoxboauB0N+oyKs1EPbgj25AROsvvXJNxxhAAAAAElFTkSuQmCC"); }
 }
 
-/* tap highlight: iOS 6 blue */
-.group > li > a:active {
-  background: linear-gradient(#058cf5, #015fe6);
-  color: #fff;
+/* tap highlight: iOS 6 blue, fades out on release like Cydia */
+.group > li > a {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  transition: background 0.3s ease-in;
 }
-.group > li > a:active::after { border-color: #fff; }
+.group > li > a:active {
+  background: #0374e2 linear-gradient(#058cdf, #015de6);
+  color: #fff;
+  transition: none;
+}
+.group > li > a:active:not(.back)::after { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAANCAYAAACQN/8FAAAAUElEQVQoz2NggILOzs46EGbAB6CK/kNxHT6FLUgKQbiaaorb0RRXUK4YKCENxG+RFD4BYiFsim6jKVKhnSIWID6CVxGSYhWoAtyK0BTjVAQADpCNh/CoZr0AAAAASUVORK5CYII="); }
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .group > li > a:active:not(.back)::after { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAAnElEQVRIx73U0QqAIAwFUCn6s6Qgei2CPqY/N4MMkU2u2+jhgi44hk5dCMERGWMW5ls1VNHHXG+a0RomQvPJRGDNaBoMMWcFhNF8YoKWBTVKFVUotxKKdiiIoltMj4IiFOktBN0Tit4AGLUEDxSEMatD+fbv17ZBsBVtbBQzexxYrATVWA6aYOUfzlqM2sNJg3Gn7KVYrQ+9BHtyAx0sbnA+jpPNAAAAAElFTkSuQmCC"); }
+}
 
 /* highlighted (lavender) group */
 .group.featured {
@@ -94,7 +103,7 @@ a { color: inherit; text-decoration: none; }
 
 /* label / value rows */
 .cell .label { font-weight: bold; flex: 0 0 auto; margin-right: 12px; }
-.cell .value { margin-left: auto; color: #385487; text-align: right; }
+.cell .value { margin-left: auto; color: #193250; text-align: right; }
 
 /* paragraph cells */
 .group .text {
@@ -110,16 +119,15 @@ a { color: inherit; text-decoration: none; }
 .section-title {
   font-size: 17px;
   font-weight: bold;
-  color: #4c566c;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: #4d4d70;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.75);
   margin: 0 12px 6px;
 }
 
 .footer {
   text-align: center;
-  font-size: 14px;
-  color: #4c566c;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  color: #4d4d70;
   margin-top: -6px;
   margin-bottom: 20px;
   line-height: 1.4;
@@ -169,10 +177,17 @@ a { color: inherit; text-decoration: none; }
 /* back row (left chevron) */
 .group > li > a.back { padding-left: 32px; padding-right: 16px; color: #385487; }
 .group > li > a.back::after {
+  content: "";
+  position: absolute;
   right: auto;
   left: 16px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-top: 3px solid #385487;
+  border-right: 3px solid #385487;
   transform: rotate(-135deg);
-  border-color: #385487;
 }
 
 /* ---------- Blue action button row ---------- */
@@ -215,3 +230,111 @@ a { color: inherit; text-decoration: none; }
 .group.header > li.nav > a.back:active { background: none; color: #1b2f57; }
 .group.header > li.nav > a.back:active::after { border-color: #1b2f57; }
 .group.header > li.nav > .title { padding-left: 90px; padding-right: 90px; text-align: center; line-height: 1; }
+
+/* ---------- Cydia-style blocks ---------- */
+
+/* dashed, translucent notice (Cydia "block") */
+.notice {
+  border: 1px dashed #999;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0 13px;
+  margin-bottom: 20px;
+}
+.notice p { margin: 9px 0; text-align: center; font-size: 16px; line-height: 1.25; }
+
+/* black terminal box (Cydia "fieldset.terminal") */
+.group.terminal { background: #000; border-color: #999; }
+.group + .group.terminal { margin-top: -11px; } /* 9px gap, like Cydia */
+.group.terminal .text {
+  color: #fff;
+  font-family: Menlo, Courier, monospace;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.3;
+  word-break: break-all;
+  -webkit-user-select: all;
+  user-select: all;
+}
+
+/* ---------- Corner tags (Cydia "extra" and "badge") ----------
+   Put a <span> inside a row link. The row already has position: relative.
+     <li><a href="#">Title <span class="tag">NEW</span></a></li>          grey, top-right
+     <li><a href="#">Notes <span class="tag badge">3</span></a></li>      red, bottom-right
+     <li><a href="#">Title <span class="tag blue">v1.0</span></a></li>    blue, top-right   */
+.tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.2em 0.4em;
+  background: #999;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.25;
+  border-bottom-left-radius: 7px;
+}
+.tag.badge {
+  top: auto;
+  bottom: 0;
+  background: #da0812;
+  font-size: 11px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 7px;
+}
+.tag.blue { background: #2463de; }
+
+/* ---------- Row icons (not used yet) ----------
+   Small rounded icon, inside the row:
+     <li><a href="#"><img class="icon" src="icons/app.png" alt=""><span class="stack">
+         <strong>Title</strong><span>Subtitle</span></span></a></li>
+   Large square icon flush to the card edge: add icons-50 or icons-64 to the <ul class="group">.
+     <ul class="group icons-64"> ...same rows... </ul>                                     */
+.icon {
+  flex: none;
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 0 12px 0 -4px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.group.icons-50 > li > a,
+.group.icons-64 > li > a { padding: 0 34px 0 0; align-items: stretch; }
+.group.icons-50 .icon,
+.group.icons-64 .icon {
+  height: auto;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: cover;
+}
+.group.icons-50 .icon { width: 50px; }
+.group.icons-64 .icon { width: 64px; }
+.group.icons-50 > li > a { min-height: 50px; }
+.group.icons-64 > li > a { min-height: 64px; }
+.group.icons-50 .icon + .stack,
+.group.icons-64 .icon + .stack {
+  flex: 1;
+  justify-content: center;
+  padding: 6px 14px;
+  border-left: 1px solid #999;
+}
+.group.icons-64 .icon + .stack { padding: 13px 14px; }
+.group.featured.icons-50 .icon + .stack,
+.group.featured.icons-64 .icon + .stack { border-left-color: #9a9ad8; }
+
+/* ---------- Two-column cards (not used yet) ----------
+   Wrap two (or more) groups in .cols; best for short link labels.
+     <div class="cols">
+       <ul class="group"><li><a href="#">GitHub</a></li><li><a href="#">LinkedIn</a></li></ul>
+       <ul class="group"><li><a href="#">Instagram</a></li><li><a href="#">Email</a></li></ul>
+     </div>                                                                                  */
+.cols {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.cols > .group { flex: 1; min-width: 0; margin-bottom: 0; }
+.cols > .group > li > a { padding-right: 28px; }
