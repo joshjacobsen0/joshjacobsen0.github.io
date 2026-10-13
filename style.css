@@ -82,8 +82,9 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   font-weight: bold;
   font-size: 18px;
-  padding-top: 11px;
-  padding-bottom: 11px;
+  /* shifted down 2px: the line box has extra space below the baseline */
+  padding-top: 13px;
+  padding-bottom: 9px;
 }
 .group.header .title small {
   font-size: 10px;
@@ -171,6 +172,7 @@ a { color: inherit; text-decoration: none; }
 .group > li > a.back::after {
   right: auto;
   left: 16px;
+  margin-top: -5.5px;
   transform: rotate(-135deg);
   border-color: #385487;
 }
@@ -188,3 +190,20 @@ a { color: inherit; text-decoration: none; }
 }
 .group.button > li > a::after { display: none; }
 .group.button > li > a:active { background: linear-gradient(#2f5aa3, #284f93 50%, #1f4180 51%, #2c5499); }
+
+/* ---------- Nav bar: back button left, title centred, one line ---------- */
+
+.group.header > li.nav { position: relative; }
+.group.header > li.nav > a.back {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  min-height: 0;
+  padding-top: 3px;
+  padding-bottom: 0;
+}
+.group.header > li.nav > a.back:active { background: none; color: #1b2f57; }
+.group.header > li.nav > a.back:active::after { border-color: #1b2f57; }
+.group.header > li.nav > .title { padding-left: 90px; padding-right: 90px; text-align: center; }
