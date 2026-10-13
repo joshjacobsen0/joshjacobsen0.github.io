@@ -82,9 +82,8 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   font-weight: bold;
   font-size: 18px;
-  /* shifted down 2px: the line box has extra space below the baseline */
-  padding-top: 13px;
-  padding-bottom: 9px;
+  padding-top: 11px;
+  padding-bottom: 11px;
 }
 .group.header .title small {
   font-size: 10px;
@@ -172,7 +171,6 @@ a { color: inherit; text-decoration: none; }
 .group > li > a.back::after {
   right: auto;
   left: 16px;
-  margin-top: -5.5px;
   transform: rotate(-135deg);
   border-color: #385487;
 }
@@ -193,6 +191,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Nav bar: back button left, title centred, one line ---------- */
 
+/* No pixel offsets: everything is centred by flex so it holds up across fonts. */
 .group.header > li.nav { position: relative; }
 .group.header > li.nav > a.back {
   position: absolute;
@@ -201,10 +200,18 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   z-index: 1;
   min-height: 0;
+  padding: 0 16px;
   font-size: 18px;
-  padding-top: 4px;
-  padding-bottom: 0;
+  line-height: 1;
+}
+/* chevron sits in the same flex line as the label instead of floating */
+.group.header > li.nav > a.back::after {
+  position: static;
+  order: -1;
+  flex: none;
+  margin: 0 8px 0 4px;
+  transform: rotate(-135deg);
 }
 .group.header > li.nav > a.back:active { background: none; color: #1b2f57; }
 .group.header > li.nav > a.back:active::after { border-color: #1b2f57; }
-.group.header > li.nav > .title { padding-left: 90px; padding-right: 90px; text-align: center; }
+.group.header > li.nav > .title { padding-left: 90px; padding-right: 90px; text-align: center; line-height: 1; }
