@@ -171,6 +171,7 @@ a { color: inherit; text-decoration: none; }
 .group > li > a.back::after {
   right: auto;
   left: 16px;
+  margin-top: -7px;
   transform: rotate(-135deg);
   border-color: #385487;
 }
