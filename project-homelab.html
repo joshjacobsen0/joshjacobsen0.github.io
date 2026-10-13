@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Homelab Rebuild</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li><div class="cell title">Homelab Rebuild</div></li>
+    <li><a class="back" href="projects.html">Projects</a></li>
+  </ul>
+
+  <h2 class="section-title">Details</h2>
+  <ul class="group">
+    <li><div class="cell"><span class="label">Status</span><span class="value">Ongoing</span></div></li>
+    <li><div class="cell"><span class="label">Firewall</span><span class="value">FortiGate</span></div></li>
+    <li><div class="cell"><span class="label">Storage</span><span class="value">TrueNAS</span></div></li>
+    <li><div class="cell"><span class="label">VLANs</span><span class="value">6</span></div></li>
+  </ul>
+
+  <h2 class="section-title">Overview</h2>
+  <ul class="group">
+    <li>
+      <p class="text">Tearing down the old flat home network and rebuilding it properly: segmented VLANs for trusted devices, IoT, guests, and a DMZ, all behind a single firewall stack.</p>
+      <span class="text-heading">Goals</span>
+      <p class="text">Keep the lab isolated from the house, get IPv6 working end to end, and make failover fast enough that nobody notices when the primary ISP drops.</p>
+    </li>
+  </ul>
+
+  <h2 class="section-title">Network</h2>
+  <ul class="group">
+    <li><div class="cell">Trusted <span class="detail">VLAN 10</span></div></li>
+    <li><div class="cell">IoT <span class="detail">VLAN 20</span></div></li>
+    <li><div class="cell">Guest <span class="detail">VLAN 30</span></div></li>
+    <li><div class="cell">Lab <span class="detail">VLAN 40</span></div></li>
+    <li><div class="cell">DMZ <span class="detail">VLAN 50</span></div></li>
+    <li><div class="cell">Management <span class="detail">VLAN 99</span></div></li>
+  </ul>
+
+  <p class="footer">Example values. Swap in your own.</p>
+
+</main>
+</body>
+</html>
