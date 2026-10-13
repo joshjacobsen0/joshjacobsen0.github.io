@@ -177,14 +177,14 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Blue action button row ---------- */
 
-.group.button { border-color: #0d3a8a; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
+.group.button { border-color: #2c4a7a; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
 .group.button > li > a {
   justify-content: center;
   padding-right: 16px;
   font-weight: bold;
   color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
-  background: linear-gradient(#5b9bef, #2a6fdb 50%, #1f5fc9 51%, #2f7be8);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+  background: linear-gradient(#7b9bd1, #4a74b8 50%, #2f5aa3 51%, #4a78bd);
 }
 .group.button > li > a::after { display: none; }
-.group.button > li > a:active { background: linear-gradient(#1f5fc9, #174bb0 50%, #123f99 51%, #1b57c0); }
+.group.button > li > a:active { background: linear-gradient(#2f5aa3, #284f93 50%, #1f4180 51%, #2c5499); }
