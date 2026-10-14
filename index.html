@@ -7,8 +7,21 @@
 <meta name="theme-color" content="#c5ccd4">
 <title>Josh Jacobsen</title>
 <link rel="stylesheet" href="style.css">
+<script>try{if(!sessionStorage.getItem("unlocked")&&!location.hash)document.documentElement.className="locked"}catch(e){}</script>
 </head>
 <body>
+<div class="lockscreen" id="lock" aria-label="Lock screen">
+  <div class="lock-status"><span>Josh</span><span class="lock-battery"></span></div>
+  <div class="lock-time"><div id="lock-clock">9:41</div><div id="lock-date">Tuesday, January 9</div></div>
+  <div class="lock-bottom">
+    <div class="slider" id="slider" role="button" tabindex="0" aria-label="Slide to unlock">
+      <div class="slider-knob" id="knob"></div>
+      <div class="slider-text">slide to unlock</div>
+    </div>
+    <a href="#" class="lock-skip" id="skip">Skip</a>
+  </div>
+</div>
+<script src="lock.js"></script>
 <main class="page">
 
   <ul class="group header">
