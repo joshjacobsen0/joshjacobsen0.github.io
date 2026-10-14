@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Photos</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="index.html">Back</a><div class="cell title">Photos</div></li>
+  </ul>
+
+  <h2 class="section-title">Project Screenshots</h2>
+  <div class="photo-grid">
+    <a href="photos/home.png" data-title="Home screen" style="background-image:url(photos/home.png)" aria-label="Home screen"></a>
+    <a href="photos/projects.png" data-title="Projects list" style="background-image:url(photos/projects.png)" aria-label="Projects list"></a>
+    <a href="photos/notes.png" data-title="Notes list" style="background-image:url(photos/notes.png)" aria-label="Notes list"></a>
+    <a href="photos/note.png" data-title="A note" style="background-image:url(photos/note.png)" aria-label="A note"></a>
+    <a href="photos/siriclaude.png" data-title="SiriClaude project" style="background-image:url(photos/siriclaude.png)" aria-label="SiriClaude project"></a>
+    <a href="photos/ipv6.png" data-title="IPv6-only lab" style="background-image:url(photos/ipv6.png)" aria-label="IPv6-only lab"></a>
+  </div>
+
+  <p class="footer">6 Photos<br>Tap a photo to view it full screen.</p>
+
+</main>
+
+<div class="viewer" id="viewer" aria-hidden="true">
+  <div class="bar"><button id="done">Done</button><span id="title"></span><span style="min-width:56px"></span></div>
+  <div class="stage" id="stage"><img id="img" alt=""></div>
+  <div class="bar bottom"><button id="prev">&#9664;</button><span class="caption" id="count"></span><button id="next">&#9654;</button></div>
+</div>
+
+<script>
+(function () {
+  var links = [].slice.call(document.querySelectorAll(".photo-grid a"));
+  var v = document.getElementById("viewer"), img = document.getElementById("img");
+  var i = 0, x0 = null;
+  function show(n) {
+    i = Math.max(0, Math.min(links.length - 1, n));
+    img.src = links[i].getAttribute("href");
+    document.getElementById("title").textContent = links[i].dataset.title;
+    document.getElementById("count").textContent = (i + 1) + " of " + links.length;
+    document.getElementById("prev").disabled = i === 0;
+    document.getElementById("next").disabled = i === links.length - 1;
+  }
+  function open(n) { show(n); v.classList.remove("chrome-off"); v.classList.add("open"); v.setAttribute("aria-hidden", "false"); }
+  function close() { v.classList.remove("open"); v.setAttribute("aria-hidden", "true"); }
+  links.forEach(function (a, n) { a.addEventListener("click", function (e) { e.preventDefault(); open(n); }); });
+  document.getElementById("done").onclick = close;
+  document.getElementById("prev").onclick = function () { show(i - 1); };
+  document.getElementById("next").onclick = function () { show(i + 1); };
+  document.getElementById("stage").onclick = function () { v.classList.toggle("chrome-off"); };
+  v.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; });
+  v.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1));
+  });
+  document.addEventListener("keydown", function (e) {
+    if (!v.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(i - 1);
+    if (e.key === "ArrowRight") show(i + 1);
+  });
+})();
+</script>
+</body>
+</html>
