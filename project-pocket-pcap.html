@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Pocket Packet Capture</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="projects.html">Back</a><div class="cell title">Pocket Packet Capture</div></li>
+  </ul>
+
+  <h2 class="section-title">Details</h2>
+  <ul class="group">
+    <li><div class="cell"><span class="label">Status</span><span class="value">Prototype</span></div></li>
+    <li><div class="cell"><span class="label">Started</span><span class="value">2026</span></div></li>
+    <li><div class="cell"><span class="label">Hardware</span><span class="value">Raspberry Pi 4</span></div></li>
+    <li><div class="cell"><span class="label">Capture</span><span class="value">Inline tap</span></div></li>
+  </ul>
+
+  <h2 class="section-title">Overview</h2>
+  <ul class="group">
+    <li>
+      <p class="text">A tiny battery-powered capture box: two Ethernet ports, a passive tap, and a web page you can open from a phone to start, stop, and download captures.</p>
+      <span class="text-heading">Goal</span>
+      <p class="text">Walk up to a misbehaving port, plug the box in line, and have a .pcap on my phone in under a minute. No laptop, no mirror-port config.</p>
+      <span class="text-heading">Open problems</span>
+      <p class="text">Keeping up with 1 Gbps line rate on a Pi, and fitting everything in a case that doesn't look like a science fair project.</p>
+    </li>
+  </ul>
+
+  <h2 class="section-title">Parts</h2>
+  <ul class="group">
+    <li><div class="cell">Board <span class="detail">Raspberry Pi 4</span></div></li>
+    <li><div class="cell">NICs <span class="detail">2x USB 3 gigabit</span></div></li>
+    <li><div class="cell">Power <span class="detail">USB-C battery pack</span></div></li>
+    <li><div class="cell">Software <span class="detail">tcpdump, Flask</span></div></li>
+  </ul>
+
+  <p class="footer">Example content. Swap in your own.</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Living on IPv6-Only</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="blog.html">Notes</a><div class="cell title">Living on IPv6-Only</div></li>
+  </ul>
+
+  <ul class="group">
+    <li><div class="cell"><span class="label">Posted</span><span class="value">Aug 30, 2026</span></div></li>
+    <li><div class="cell"><span class="label">Reading time</span><span class="value">3 min</span></div></li>
+  </ul>
+
+  <ul class="group">
+    <li>
+      <p class="text">For three months, one VLAN at home had no IPv4. These are my notes on what that was like.</p>
+      <span class="text-heading">The setup</span>
+      <p class="text">The firewall ran NAT64 and DNS64, so IPv6-only clients could still reach IPv4-only sites through translation.</p>
+      <span class="text-heading">What worked</span>
+      <p class="text">Browsers, streaming, phones, laptops, and most apps. It was boring, which is exactly the point of a good transition.</p>
+      <span class="text-heading">What broke</span>
+      <p class="text">Game consoles, an older printer, a few VPN clients, and anything that hard-codes an IPv4 address. Each had a workaround, but only after some digging.</p>
+      <p class="text">I'd do it again. The details are on the IPv6-Only Test Network project page.</p>
+    </li>
+  </ul>
+
+  <p class="footer">Thanks for reading.</p>
+
+</main>
+</body>
+</html>
