@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Hosting a Cydia Repo in 2026</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="blog.html">Notes</a><div class="cell title">Hosting a Cydia Repo in 2026</div></li>
+  </ul>
+
+  <ul class="group">
+    <li><div class="cell"><span class="label">Posted</span><span class="value">Sep 20, 2026</span></div></li>
+    <li><div class="cell"><span class="label">Reading time</span><span class="value">2 min</span></div></li>
+  </ul>
+
+  <ul class="group">
+    <li>
+      <p class="text">Cydia repos are just static files, which makes them a great fit for a tiny server.</p>
+      <span class="text-heading">What you need</span>
+      <p class="text">A Packages file listing each .deb with its size and checksums, a Release file describing the repo, and a web server that serves both over plain files. That's it.</p>
+      <span class="text-heading">Gotchas</span>
+      <p class="text">Old devices dislike modern TLS, so I serve the repo over both HTTP and HTTPS. Compress the Packages file as .bz2 too, because Cydia asks for it first.</p>
+      <p class="text">The Cydia Repository project page tracks how close mine is to going live.</p>
+    </li>
+  </ul>
+
+  <p class="footer">Thanks for reading.</p>
+
+</main>
+</body>
+</html>

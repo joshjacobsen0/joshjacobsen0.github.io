@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>IPv6-Only Test Network</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="projects.html">Back</a><div class="cell title">IPv6-Only Test Network</div></li>
+  </ul>
+
+  <h2 class="section-title">Details</h2>
+  <ul class="group">
+    <li><div class="cell"><span class="label">Status</span><span class="value">Completed</span></div></li>
+    <li><div class="cell"><span class="label">Year</span><span class="value">2026</span></div></li>
+    <li><div class="cell"><span class="label">Transition</span><span class="value">NAT64 / DNS64</span></div></li>
+    <li><div class="cell"><span class="label">Duration</span><span class="value">3 months</span></div></li>
+  </ul>
+
+  <h2 class="section-title">Overview</h2>
+  <ul class="group">
+    <li>
+      <p class="text">A VLAN with no IPv4 at all, used as my daily network for a few months to see what really breaks when you remove the old protocol.</p>
+      <span class="text-heading">How it worked</span>
+      <p class="text">DNS64 synthesised AAAA records for IPv4-only sites, and a NAT64 gateway on the firewall translated them. Everything else was native IPv6.</p>
+      <span class="text-heading">Outcome</span>
+      <p class="text">About 95% of what I use just worked. The holdouts were a few game consoles, a printer, and any app that hard-codes an IPv4 literal. See the note on living IPv6-only.</p>
+    </li>
+  </ul>
+
+  <h2 class="section-title">Links</h2>
+  <ul class="group">
+    <li><a href="post-ipv6-only.html">Note: Living on IPv6-Only</a></li>
+  </ul>
+
+  <p class="footer">Example content. Swap in your own.</p>
+
+</main>
+</body>
+</html>

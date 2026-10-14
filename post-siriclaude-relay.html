@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Teaching Siri to Ask Claude</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="blog.html">Notes</a><div class="cell title">Teaching Siri to Ask Claude</div></li>
+  </ul>
+
+  <ul class="group">
+    <li><div class="cell"><span class="label">Posted</span><span class="value">Oct 14, 2026</span></div></li>
+    <li><div class="cell"><span class="label">Reading time</span><span class="value">3 min</span></div></li>
+  </ul>
+
+  <ul class="group">
+    <li>
+      <p class="text">SiriClaude started as a joke: what if the old Siri on an iPhone 5 could hand a question to something smarter? Now it's the project I open most often.</p>
+      <span class="text-heading">The problem</span>
+      <p class="text">iOS 6 speaks an old version of TLS that modern API servers refuse. The phone literally can't complete the handshake.</p>
+      <span class="text-heading">The workaround</span>
+      <p class="text">A small relay on my network accepts a plain request from the phone, makes the modern HTTPS call, and streams the answer back. The tweak on the phone only needs to know the relay's address.</p>
+      <span class="text-heading">What I learned</span>
+      <p class="text">Constraints are fun. With a few hundred megabytes of RAM and no modern libraries, every feature has to justify itself.</p>
+      <p class="text">Next up is conversation history, so follow-up questions work.</p>
+    </li>
+  </ul>
+
+  <p class="footer">Thanks for reading.</p>
+
+</main>
+</body>
+</html>

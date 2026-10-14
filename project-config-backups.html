@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>Config Backup Pipeline</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="projects.html">Back</a><div class="cell title">Config Backup Pipeline</div></li>
+  </ul>
+
+  <h2 class="section-title">Details</h2>
+  <ul class="group">
+    <li><div class="cell"><span class="label">Status</span><span class="value">In Progress</span></div></li>
+    <li><div class="cell"><span class="label">Started</span><span class="value">2026</span></div></li>
+    <li><div class="cell"><span class="label">Language</span><span class="value">Python</span></div></li>
+    <li><div class="cell"><span class="label">Devices</span><span class="value">42</span></div></li>
+  </ul>
+
+  <h2 class="section-title">Overview</h2>
+  <ul class="group">
+    <li>
+      <p class="text">A nightly job that logs into every switch, router, and firewall, pulls the running config, and commits it to a private Git repo so every change has a diff and a timestamp.</p>
+      <span class="text-heading">Why</span>
+      <p class="text">Most outages I've chased came down to a change nobody remembered making. With configs in version control, &ldquo;what changed?&rdquo; becomes a one-line command.</p>
+      <span class="text-heading">What's next</span>
+      <p class="text">Alerting on unexpected diffs, and a read-only web view that renders each device's history as a table.</p>
+    </li>
+  </ul>
+
+  <h2 class="section-title">Stack</h2>
+  <ul class="group">
+    <li><div class="cell">Collector <span class="detail">Netmiko</span></div></li>
+    <li><div class="cell">Storage <span class="detail">Git</span></div></li>
+    <li><div class="cell">Scheduler <span class="detail">systemd timer</span></div></li>
+    <li><div class="cell">Alerts <span class="detail">Telegram</span></div></li>
+  </ul>
+
+  <p class="footer">Example content. Swap in your own.</p>
+
+</main>
+</body>
+</html>

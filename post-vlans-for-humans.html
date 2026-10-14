@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#c5ccd4">
+<title>VLANs for Humans</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+
+  <ul class="group header">
+    <li class="nav"><a class="back" href="blog.html">Notes</a><div class="cell title">VLANs for Humans</div></li>
+  </ul>
+
+  <ul class="group">
+    <li><div class="cell"><span class="label">Posted</span><span class="value">Oct 6, 2026</span></div></li>
+    <li><div class="cell"><span class="label">Reading time</span><span class="value">3 min</span></div></li>
+  </ul>
+
+  <ul class="group">
+    <li>
+      <p class="text">A friend asked me how to start segmenting their home network. Here is the short version I gave them.</p>
+      <span class="text-heading">Start with three</span>
+      <p class="text">Trusted, IoT, and Guest is enough. Add more only when you have a reason.</p>
+      <span class="text-heading">Default deny</span>
+      <p class="text">Let each VLAN reach the internet and nothing else. Then open specific holes one at a time, such as letting Trusted reach the printer, and write down why.</p>
+      <span class="text-heading">Mind the mDNS</span>
+      <p class="text">AirPlay, printers, and casting all rely on multicast discovery, which stops at the VLAN boundary. An mDNS reflector on the firewall fixes it without opening everything up.</p>
+      <p class="text">My own layout is on the Homelab Rebuild page if you want a template.</p>
+    </li>
+  </ul>
+
+  <p class="footer">Thanks for reading.</p>
+
+</main>
+</body>
+</html>
